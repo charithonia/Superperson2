@@ -18,7 +18,6 @@ public class Address {
     private String city;
     private String state;
     private int zip;
-    private int zip2;
 
     public int getId() {
 	return id;
@@ -68,24 +67,15 @@ public class Address {
 	this.zip = zip;
     }
 
-    public int getZip2() {
-	return zip2;
-    }
-
-    public void setZip2(int zip2) {
-	this.zip2 = zip2;
-    }
-
     @Override
     public int hashCode() {
-	int hash = 3;
-	hash = 47 * hash + this.id;
-	hash = 47 * hash + this.number;
-	hash = 47 * hash + Objects.hashCode(this.street);
-	hash = 47 * hash + Objects.hashCode(this.city);
-	hash = 47 * hash + Objects.hashCode(this.state);
-	hash = 47 * hash + this.zip;
-	hash = 47 * hash + this.zip2;
+	int hash = 7;
+	hash = 29 * hash + this.id;
+	hash = 29 * hash + this.number;
+	hash = 29 * hash + Objects.hashCode(this.street);
+	hash = 29 * hash + Objects.hashCode(this.city);
+	hash = 29 * hash + Objects.hashCode(this.state);
+	hash = 29 * hash + this.zip;
 	return hash;
     }
 
@@ -108,9 +98,6 @@ public class Address {
 	    return false;
 	}
 	if (this.zip != other.zip) {
-	    return false;
-	}
-	if (this.zip2 != other.zip2) {
 	    return false;
 	}
 	if (!Objects.equals(this.street, other.street)) {

@@ -5,19 +5,19 @@
  */
 package com.sg.superperson2.model;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
 /**
  *
  * @author main
  */
-public class Organization {
+public class Superperson {
     private int id;
     private String name;
-    private String head;
+    private String realRame;
+    private LocalDate dateOfBirth;
     private String description;
-    
-    private Location location;
 
     public int getId() {
 	return id;
@@ -35,14 +35,22 @@ public class Organization {
 	this.name = name;
     }
 
-    public String getHead() {
-	return head;
+    public String getRealRame() {
+	return realRame;
     }
 
-    public void setHead(String head) {
-	this.head = head;
+    public void setRealRame(String realRame) {
+	this.realRame = realRame;
     }
-    
+
+    public LocalDate getDateOfBirth() {
+	return dateOfBirth;
+    }
+
+    public void setDateOfBirth(LocalDate dateOfBirth) {
+	this.dateOfBirth = dateOfBirth;
+    }
+
     public String getDescription() {
 	return description;
     }
@@ -50,23 +58,15 @@ public class Organization {
     public void setDescription(String description) {
 	this.description = description;
     }
-    
-    public Location getLocation() {
-	return location;
-    }
-
-    public void setLocation(Location location) {
-	this.location = location;
-    }
 
     @Override
     public int hashCode() {
 	int hash = 7;
-	hash = 83 * hash + this.id;
-	hash = 83 * hash + Objects.hashCode(this.name);
-	hash = 83 * hash + Objects.hashCode(this.head);
-	hash = 83 * hash + Objects.hashCode(this.description);
-	hash = 83 * hash + Objects.hashCode(this.location);
+	hash = 41 * hash + this.id;
+	hash = 41 * hash + Objects.hashCode(this.name);
+	hash = 41 * hash + Objects.hashCode(this.realRame);
+	hash = 41 * hash + Objects.hashCode(this.dateOfBirth);
+	hash = 41 * hash + Objects.hashCode(this.description);
 	return hash;
     }
 
@@ -81,20 +81,20 @@ public class Organization {
 	if (getClass() != obj.getClass()) {
 	    return false;
 	}
-	final Organization other = (Organization) obj;
+	final Superperson other = (Superperson) obj;
 	if (this.id != other.id) {
 	    return false;
 	}
 	if (!Objects.equals(this.name, other.name)) {
 	    return false;
 	}
-	if (!Objects.equals(this.head, other.head)) {
+	if (!Objects.equals(this.realRame, other.realRame)) {
 	    return false;
 	}
 	if (!Objects.equals(this.description, other.description)) {
 	    return false;
 	}
-	if (!Objects.equals(this.location, other.location)) {
+	if (!Objects.equals(this.dateOfBirth, other.dateOfBirth)) {
 	    return false;
 	}
 	return true;

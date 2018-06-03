@@ -6,7 +6,6 @@
 package com.sg.superperson2.model;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -16,7 +15,6 @@ import java.util.Objects;
 public class Sighting {
     private int id;
     private Location location;
-    private List<Person> people;
     private LocalDateTime timestamp;
     private User user;
 
@@ -34,14 +32,6 @@ public class Sighting {
 
     public void setLocation(Location location) {
 	this.location = location;
-    }
-
-    public List<Person> getPeople() {
-	return people;
-    }
-
-    public void setPeople(List<Person> people) {
-	this.people = people;
     }
 
     public LocalDateTime getTimestamp() {
@@ -63,11 +53,10 @@ public class Sighting {
     @Override
     public int hashCode() {
 	int hash = 7;
-	hash = 73 * hash + this.id;
-	hash = 73 * hash + Objects.hashCode(this.location);
-	hash = 73 * hash + Objects.hashCode(this.people);
-	hash = 73 * hash + Objects.hashCode(this.timestamp);
-	hash = 73 * hash + Objects.hashCode(this.user);
+	hash = 53 * hash + this.id;
+	hash = 53 * hash + Objects.hashCode(this.location);
+	hash = 53 * hash + Objects.hashCode(this.timestamp);
+	hash = 53 * hash + Objects.hashCode(this.user);
 	return hash;
     }
 
@@ -87,9 +76,6 @@ public class Sighting {
 	    return false;
 	}
 	if (!Objects.equals(this.location, other.location)) {
-	    return false;
-	}
-	if (!Objects.equals(this.people, other.people)) {
 	    return false;
 	}
 	if (!Objects.equals(this.timestamp, other.timestamp)) {

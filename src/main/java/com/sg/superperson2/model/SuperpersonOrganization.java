@@ -9,15 +9,24 @@ package com.sg.superperson2.model;
  *
  * @author main
  */
-public class Person_Organization {
-    private Person person;
+public class SuperpersonOrganization {
+    private int id;
+    private Superperson person;
     private Organization organization;
 
-    public Person getPerson() {
+    public int getId() {
+	return id;
+    }
+    
+    public void setId(int id) {
+	this.id = id;
+    }
+    
+    public Superperson getPerson() {
 	return person;
     }
 
-    public void setPerson(Person person) {
+    public void setPerson(Superperson person) {
 	this.person = person;
     }
 

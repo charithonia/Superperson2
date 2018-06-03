@@ -46,9 +46,9 @@ create table `organization` (
 create table `superperson` (
 	`id` int not null auto_increment,
     `name` varchar(50),
-    `description` varchar(1000),
     `real_name` varchar(50),
     `date_of_birth` date,
+    `description` varchar(1000),
     primary key (`id`)
 );
 
@@ -133,9 +133,9 @@ insert into `power` (`id`, `name`, `description`) values
 (2, 'Strength', 'User possesses superhuman strength.'),
 (3, 'Telekinesis', 'User can manipulate objects using their mind.');
 
-insert into `superperson` (`id`, `name`) values
-(1, 'Captain Freeworld'),
-(2, 'Teleporto');
+insert into `superperson` (`id`, `name`, `real_name`, `date_of_birth`, `description`) values
+(1, 'Captain Freeworld', 'John Smith', '1980-01-01', 'This superhero is the embodiment of patriotic jingoism and anti-communist paranoia. More heroic than he sounds!'),
+(2, 'Teleporto', 'Malachi Malvado', '1950-01-01', 'This arch-villain is known for his ability to read minds and to teleport from place to place at will. He is also annoyingly hyper-critical and a bit too controlling.');
 
 insert into `user` (`id`, `username`, `email`, `date_created`) values
 (1, 'jdoe', 'johndoe@example.com', current_timestamp),
