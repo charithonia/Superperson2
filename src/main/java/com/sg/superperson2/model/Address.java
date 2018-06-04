@@ -13,11 +13,11 @@ import java.util.Objects;
  */
 public class Address {
     private int id;
-    private int number;
+    private String number;
     private String street;
     private String city;
     private String state;
-    private int zip;
+    private String zip;
 
     public int getId() {
 	return id;
@@ -27,11 +27,11 @@ public class Address {
 	this.id = id;
     }
 
-    public int getNumber() {
+    public String getNumber() {
 	return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(String number) {
 	this.number = number;
     }
 
@@ -59,23 +59,23 @@ public class Address {
 	this.state = state;
     }
 
-    public int getZip() {
+    public String getZip() {
 	return zip;
     }
 
-    public void setZip(int zip) {
+    public void setZip(String zip) {
 	this.zip = zip;
     }
 
     @Override
     public int hashCode() {
 	int hash = 7;
-	hash = 29 * hash + this.id;
-	hash = 29 * hash + this.number;
-	hash = 29 * hash + Objects.hashCode(this.street);
-	hash = 29 * hash + Objects.hashCode(this.city);
-	hash = 29 * hash + Objects.hashCode(this.state);
-	hash = 29 * hash + this.zip;
+	hash = 79 * hash + this.id;
+	hash = 79 * hash + Objects.hashCode(this.number);
+	hash = 79 * hash + Objects.hashCode(this.street);
+	hash = 79 * hash + Objects.hashCode(this.city);
+	hash = 79 * hash + Objects.hashCode(this.state);
+	hash = 79 * hash + Objects.hashCode(this.zip);
 	return hash;
     }
 
@@ -94,10 +94,7 @@ public class Address {
 	if (this.id != other.id) {
 	    return false;
 	}
-	if (this.number != other.number) {
-	    return false;
-	}
-	if (this.zip != other.zip) {
+	if (!Objects.equals(this.number, other.number)) {
 	    return false;
 	}
 	if (!Objects.equals(this.street, other.street)) {
@@ -107,6 +104,9 @@ public class Address {
 	    return false;
 	}
 	if (!Objects.equals(this.state, other.state)) {
+	    return false;
+	}
+	if (!Objects.equals(this.zip, other.zip)) {
 	    return false;
 	}
 	return true;
