@@ -15,7 +15,7 @@ import com.sg.superperson2.model.Location;
  */
 public interface LocationDao {
     
-    public void addLocation(Location location);
+    public Location addLocation(Location location);
     
     public void removeLocation(Location location);
     
@@ -23,5 +23,5 @@ public interface LocationDao {
     
     public List<Location> getAllLocations();
     
-    public Location getLocationById();
+    public Location getLocationById(int id);
 }

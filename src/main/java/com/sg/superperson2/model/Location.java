@@ -14,11 +14,16 @@ import java.util.Objects;
 public class Location {
     private int id;
     private String name;
-    private double longitude;
     private double latitude;
+    private double longitude;
     
     private Address address;
 
+    public Location() {
+	Address blankAddress = new Address();
+	address = blankAddress;
+    }
+    
     public int getId() {
 	return id;
     }
@@ -35,16 +40,16 @@ public class Location {
 	this.name = name;
     }
 
+    public double getLatitude() {
+	return latitude;
+    }
+
     public double getLongitude() {
 	return longitude;
     }
 
     public void setLongitude(double longitude) {
 	this.longitude = longitude;
-    }
-
-    public double getLatitude() {
-	return latitude;
     }
 
     public void setLatitude(double latitude) {
