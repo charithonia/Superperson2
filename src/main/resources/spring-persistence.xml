@@ -49,4 +49,19 @@
 	<property name="jdbcTemplate" ref="jdbcTemplate"/>
 	<property name="addressDao" ref="addressDao"/>
     </bean>
+    
+    <bean id="organizationDao"
+	  class="com.sg.superperson2.dao.OrganizationDaoJdbc">
+	<property name="jdbcTemplate" ref="jdbcTemplate"/>
+    </bean>
+    
+    <bean id="sightingDao"
+	  class="com.sg.superperson2.dao.SightingDaoJdbc">
+	<property name="jdbcTemplate" ref="jdbcTemplate"/>
+    </bean>
+    
+    <bean id="superpersonDao"
+	  class="com.sg.superperson2.dao.SuperpersonDaoJdbc">
+	<property name="jdbcTemplate" ref="jdbcTemplate"/>
+    </bean>
 </beans>

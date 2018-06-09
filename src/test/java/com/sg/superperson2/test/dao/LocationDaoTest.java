@@ -12,6 +12,7 @@ import javax.inject.Inject;
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertEquals;
 import org.junit.runner.RunWith;
 
@@ -92,5 +93,18 @@ public class LocationDaoTest {
 	resultList = locationDao.getAllLocations();
 	
 	assertTrue(resultList.size() == 3);
+    }
+    
+    @Test
+    @Transactional
+    public void testRemoveLocationAddress() {
+	Location loc = new Location();
+	locationDao.addLocation(loc);
+	Address adr = loc.getAddress();
+	
+	locationDao.removeLocation(loc);
+	Address result = addressDao.getAddressById(adr.getId());
+	
+	assertNull(result);
     }
 }

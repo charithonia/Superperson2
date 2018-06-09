@@ -46,9 +46,9 @@ create table `organization` (
 create table `superperson` (
 	`id` int not null auto_increment,
     `name` varchar(50),
-    `description` varchar(1000),
     `real_name` varchar(50),
     `date_of_birth` date,
+	`description` varchar(1000),
     primary key (`id`)
 );
 

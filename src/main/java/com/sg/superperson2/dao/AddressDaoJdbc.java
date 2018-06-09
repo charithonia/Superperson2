@@ -39,7 +39,7 @@ public class AddressDaoJdbc implements AddressDao {
 	    "select * from address";
     
     // jdbc
-    public JdbcTemplate jdbcTemplate;
+    private JdbcTemplate jdbcTemplate;
     
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
 	this.jdbcTemplate = jdbcTemplate;

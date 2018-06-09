@@ -16,17 +16,15 @@ import com.sg.superperson2.model.Superperson;
  */
 public interface SuperpersonDao {
     
-    public void addSuperperson(Superperson superperson);
+    public Superperson addSuperperson(Superperson superperson);
     
     public void removeSuperperson(Superperson superperson);
     
     public void updateSuperperson(Superperson superperson);
     
-    public List<SuperpersonDao> getAllSuperpersons();
+    public List<Superperson> getAllSuperpersons();
     
-    public SuperpersonDao getSuperpersonById(int id);
+    public Superperson getSuperpersonById(int id);
     
-    public SuperpersonDao getSuperpersonByName();
-    
-    public List<SuperpersonDao> getSuperpersonsBySighting(Sighting sighting);
+    public List<Superperson> getSuperpersonsBySighting(Sighting sighting);
 }

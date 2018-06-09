@@ -16,7 +16,7 @@ import com.sg.superperson2.model.Superperson;
  */
 public interface OrganizationDao {
     
-    public void addOrganization(Organization organization);
+    public Organization addOrganization(Organization organization);
     
     public void removeOrganization(Organization organization);
     
@@ -25,9 +25,7 @@ public interface OrganizationDao {
     public List<Organization> getAllOrganizations();
     
     public Organization getOrganizationById(int id);
-    
-    public Organization getOrganizationByName(String name);
-    
+        
     public List<Organization> getOrganizationsBySuperperson(
 	    Superperson superperson);
 }

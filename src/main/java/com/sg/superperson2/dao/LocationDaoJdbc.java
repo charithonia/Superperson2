@@ -78,8 +78,16 @@ public class LocationDaoJdbc implements LocationDao {
     
     @Override
     public void removeLocation(Location location) {
+	
+	// Get location's address
+	Address address = new Address();
+	address.setId(location.getAddress().getId());
+	
 	jdbcTemplate.update(SQL_DELETE_LOCATION,
 		location.getId());
+	
+	// Remove address
+	addressDao.removeAddress(address);
     }
     
     @Override

@@ -15,7 +15,7 @@ import java.util.Objects;
 public class Superperson {
     private int id;
     private String name;
-    private String realRame;
+    private String realName;
     private LocalDate dateOfBirth;
     private String description;
 
@@ -35,12 +35,12 @@ public class Superperson {
 	this.name = name;
     }
 
-    public String getRealRame() {
-	return realRame;
+    public String getRealName() {
+	return realName;
     }
 
-    public void setRealRame(String realRame) {
-	this.realRame = realRame;
+    public void setRealName(String realName) {
+	this.realName = realName;
     }
 
     public LocalDate getDateOfBirth() {
@@ -64,7 +64,7 @@ public class Superperson {
 	int hash = 7;
 	hash = 41 * hash + this.id;
 	hash = 41 * hash + Objects.hashCode(this.name);
-	hash = 41 * hash + Objects.hashCode(this.realRame);
+	hash = 41 * hash + Objects.hashCode(this.realName);
 	hash = 41 * hash + Objects.hashCode(this.dateOfBirth);
 	hash = 41 * hash + Objects.hashCode(this.description);
 	return hash;
@@ -88,7 +88,7 @@ public class Superperson {
 	if (!Objects.equals(this.name, other.name)) {
 	    return false;
 	}
-	if (!Objects.equals(this.realRame, other.realRame)) {
+	if (!Objects.equals(this.realName, other.realName)) {
 	    return false;
 	}
 	if (!Objects.equals(this.description, other.description)) {

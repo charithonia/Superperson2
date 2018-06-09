@@ -15,7 +15,7 @@ import com.sg.superperson2.model.Sighting;
  */
 public interface SightingDao {
     
-    public void addSighting(Sighting sighting);
+    public Sighting addSighting(Sighting sighting);
     
     public void removeSighting(Sighting sighting);
     
@@ -24,8 +24,6 @@ public interface SightingDao {
     public List<Sighting> getAllSightings();
     
     public List<Sighting> getAllSightingsSortByDate();
-    
-    public List<Sighting> getAllSightingsSortByDate(int limit);
-    
+        
     public Sighting getSightingById(int id);
 }
