@@ -11,7 +11,7 @@ package com.sg.superperson2.model;
  */
 public class SuperpersonPower {
     private int id;
-    private Superperson person;
+    private Superperson superperson;
     private Power power;
 
     public int getId() {
@@ -22,12 +22,12 @@ public class SuperpersonPower {
 	this.id = id;
     }
     
-    public Superperson getPerson() {
-	return person;
+    public Superperson getSuperperson() {
+	return superperson;
     }
 
-    public void setPerson(Superperson person) {
-	this.person = person;
+    public void setSuperperson(Superperson superperson) {
+	this.superperson = superperson;
     }
 
     public Power getPower() {

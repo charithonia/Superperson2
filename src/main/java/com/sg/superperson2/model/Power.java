@@ -42,10 +42,10 @@ public class Power {
 
     @Override
     public int hashCode() {
-	int hash = 7;
-	hash = 97 * hash + this.id;
-	hash = 97 * hash + Objects.hashCode(this.name);
-	hash = 97 * hash + Objects.hashCode(this.description);
+	int hash = 3;
+	hash = 67 * hash + this.id;
+	hash = 67 * hash + Objects.hashCode(this.name);
+	hash = 67 * hash + Objects.hashCode(this.description);
 	return hash;
     }
 

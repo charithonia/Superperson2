@@ -62,11 +62,11 @@ public class Superperson {
     @Override
     public int hashCode() {
 	int hash = 7;
-	hash = 41 * hash + this.id;
-	hash = 41 * hash + Objects.hashCode(this.name);
-	hash = 41 * hash + Objects.hashCode(this.realName);
-	hash = 41 * hash + Objects.hashCode(this.dateOfBirth);
-	hash = 41 * hash + Objects.hashCode(this.description);
+	hash = 23 * hash + this.id;
+	hash = 23 * hash + Objects.hashCode(this.name);
+	hash = 23 * hash + Objects.hashCode(this.realName);
+	hash = 23 * hash + Objects.hashCode(this.dateOfBirth);
+	hash = 23 * hash + Objects.hashCode(this.description);
 	return hash;
     }
 

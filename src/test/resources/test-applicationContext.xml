@@ -75,6 +75,16 @@
 	<property name="jdbcTemplate" ref="jdbcTemplate"/>
     </bean>
     
+    <bean id="superpersonOrganizationDao"
+	  class="com.sg.superperson2.dao.SuperpersonOrganizationDaoJdbc">
+	<property name="jdbcTemplate" ref="jdbcTemplate"/>
+    </bean>
+    
+    <bean id="superpersonPowerDao"
+	  class="com.sg.superperson2.dao.SuperpersonPowerDaoJdbc">
+	<property name="jdbcTemplate" ref="jdbcTemplate"/>
+    </bean>
+    
     <bean id="userDao"
 	  class="com.sg.superperson2.dao.UserDaoJdbc">
 	<property name="jdbcTemplate" ref="jdbcTemplate"/>

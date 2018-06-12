@@ -10,9 +10,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import org.junit.runner.RunWith;
 
@@ -20,11 +19,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.sg.superperson2.dao.LocationDao;
 import com.sg.superperson2.dao.SightingDao;
 import com.sg.superperson2.dao.SightingSuperpersonDao;
-import com.sg.superperson2.dao.SuperpersonDao;
-import com.sg.superperson2.dao.UserDao;
 import com.sg.superperson2.model.Location;
 import com.sg.superperson2.model.Sighting;
 import com.sg.superperson2.model.SightingSuperperson;
@@ -44,7 +40,7 @@ public class SightingSuperpersonDaoTest {
     SightingDao sightingDao;
     
     @Inject
-    SightingSuperpersonDao sightingSuperpersonDao;
+    SightingSuperpersonDao sigSupDao;
     
     // 3 sighting_superpersons in database
     private final int N_SIGHTING_SUPERPERSONS = 3;
@@ -75,6 +71,7 @@ public class SightingSuperpersonDaoTest {
 	
 	sightingDao.addSighting(sig);
 	
+	// testing
 	SightingSuperperson sigSup1 = new SightingSuperperson();
 	sigSup1.setSighting(sig);
 	sigSup1.setSuperperson(sup1);
@@ -83,23 +80,33 @@ public class SightingSuperpersonDaoTest {
 	sigSup2.setSighting(sig);
 	sigSup2.setSuperperson(sup2);
 	
-	sightingSuperpersonDao.addSightingSuperperson(sigSup1);
-	sightingSuperpersonDao.addSightingSuperperson(sigSup2);
+	sigSupDao.addSightingSuperperson(sigSup1);
+	sigSupDao.addSightingSuperperson(sigSup2);
 	
-	List<SightingSuperperson> resultList = sightingSuperpersonDao.
+	List<SightingSuperperson> resultList = sigSupDao.
 		getAllSightingSuperpersons();
 	
 	assertTrue(resultList.size() == N_SIGHTING_SUPERPERSONS + 2);
 	
-	sightingSuperpersonDao.removeSightingSuperperson(sigSup1);
+	SightingSuperperson result = sigSupDao.
+		getSightingSuperpersonById(sigSup1.getId());
 	
-	resultList = sightingSuperpersonDao.getAllSightingSuperpersons();
+	assertNotNull(result);
+	
+	result = sigSupDao.
+		getSightingSuperpersonById(sigSup2.getId());
+	
+	assertNotNull(result);
+	
+	sigSupDao.removeSightingSuperperson(sigSup1);
+	
+	resultList = sigSupDao.getAllSightingSuperpersons();
 	
 	assertTrue(resultList.size() == N_SIGHTING_SUPERPERSONS + 1);
 	
-	sightingSuperpersonDao.removeSightingSuperperson(sigSup2);
+	sigSupDao.removeSightingSuperperson(sigSup2);
 	
-	resultList = sightingSuperpersonDao.getAllSightingSuperpersons();
+	resultList = sigSupDao.getAllSightingSuperpersons();
 	
 	assertTrue(resultList.size() == N_SIGHTING_SUPERPERSONS);
     }

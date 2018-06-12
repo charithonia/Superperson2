@@ -62,11 +62,11 @@ public class Organization {
     @Override
     public int hashCode() {
 	int hash = 7;
-	hash = 83 * hash + this.id;
-	hash = 83 * hash + Objects.hashCode(this.name);
-	hash = 83 * hash + Objects.hashCode(this.head);
-	hash = 83 * hash + Objects.hashCode(this.description);
-	hash = 83 * hash + Objects.hashCode(this.location);
+	hash = 61 * hash + this.id;
+	hash = 61 * hash + Objects.hashCode(this.name);
+	hash = 61 * hash + Objects.hashCode(this.head);
+	hash = 61 * hash + Objects.hashCode(this.description);
+	hash = 61 * hash + Objects.hashCode(this.location);
 	return hash;
     }
 

@@ -64,11 +64,21 @@ public class OrganizationDaoJdbc implements OrganizationDao {
     
     @Override
     public Organization addOrganization(Organization org) {
-	jdbcTemplate.update(SQL_INSERT_ORGANIZATION,
+	
+	// empty location check
+	Integer locationId;
+	if (org.getLocation() != null) {
+	    locationId = org.getLocation().getId();
+	}
+	else {
+	    locationId = null;
+	}
+	
+	    jdbcTemplate.update(SQL_INSERT_ORGANIZATION,
 		org.getName(),
 		org.getHead(),
 		org.getDescription(),
-		org.getLocation().getId());
+		locationId);
 	
 	int id = jdbcTemplate.queryForObject("select last_insert_id()",
 		Integer.class);

@@ -21,9 +21,6 @@ public interface SuperpersonOrganizationDao {
     public void removeSuperpersonOrganization(SuperpersonOrganization
 	    superpersonOrganization);
     
-    public void updateSuperpersonOrganization(SuperpersonOrganization
-	    superpersonOrganization);
-    
     public List<SuperpersonOrganization> getAllSuperpersonOrganizations();
     
     public SuperpersonOrganization getSuperpersonOrganizationById(int id);

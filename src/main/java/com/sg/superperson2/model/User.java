@@ -53,10 +53,10 @@ public class User {
     @Override
     public int hashCode() {
 	int hash = 3;
-	hash = 43 * hash + this.id;
-	hash = 43 * hash + Objects.hashCode(this.username);
-	hash = 43 * hash + Objects.hashCode(this.email);
-	hash = 43 * hash + Objects.hashCode(this.dateCreated);
+	hash = 53 * hash + this.id;
+	hash = 53 * hash + Objects.hashCode(this.username);
+	hash = 53 * hash + Objects.hashCode(this.email);
+	hash = 53 * hash + Objects.hashCode(this.dateCreated);
 	return hash;
     }
 

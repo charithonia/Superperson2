@@ -19,8 +19,6 @@ public interface SuperpersonPowerDao {
     
     public void removeSuperpersonPower(SuperpersonPower superpersonPower);
     
-    public void updateSuperpersonPower(SuperpersonPower superpersonPower);
-    
     public List<SuperpersonPower> getAllSuperpersonPowers();
     
     public SuperpersonPower getSuperpersonPowerById(int id);

@@ -69,13 +69,13 @@ public class Address {
 
     @Override
     public int hashCode() {
-	int hash = 7;
-	hash = 79 * hash + this.id;
-	hash = 79 * hash + Objects.hashCode(this.number);
-	hash = 79 * hash + Objects.hashCode(this.street);
-	hash = 79 * hash + Objects.hashCode(this.city);
-	hash = 79 * hash + Objects.hashCode(this.state);
-	hash = 79 * hash + Objects.hashCode(this.zip);
+	int hash = 5;
+	hash = 41 * hash + this.id;
+	hash = 41 * hash + Objects.hashCode(this.number);
+	hash = 41 * hash + Objects.hashCode(this.street);
+	hash = 41 * hash + Objects.hashCode(this.city);
+	hash = 41 * hash + Objects.hashCode(this.state);
+	hash = 41 * hash + Objects.hashCode(this.zip);
 	return hash;
     }
 
