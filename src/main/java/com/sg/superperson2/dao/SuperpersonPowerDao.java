@@ -15,7 +15,7 @@ import com.sg.superperson2.model.SuperpersonPower;
  */
 public interface SuperpersonPowerDao {
     
-    public void addSuperpersonPower(SuperpersonPower superpersonPower);
+    public SuperpersonPower addSuperpersonPower(SuperpersonPower superpersonPower);
     
     public void removeSuperpersonPower(SuperpersonPower superpersonPower);
     

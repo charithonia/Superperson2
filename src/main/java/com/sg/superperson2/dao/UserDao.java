@@ -15,7 +15,7 @@ import com.sg.superperson2.model.User;
  */
 public interface UserDao {
     
-    public void addUser(User user);
+    public User addUser(User user);
     
     public void removeUser(User user);
     

@@ -66,7 +66,7 @@ public class SightingDaoJdbc implements SightingDao {
 		timestamp,
 		sighting.getUser().getId());
 	
-	int id = jdbcTemplate.queryForObject("select last_insert_id",
+	int id = jdbcTemplate.queryForObject("select last_insert_id()",
 		Integer.class);
 	sighting.setId(id);
 	

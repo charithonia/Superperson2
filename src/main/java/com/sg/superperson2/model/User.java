@@ -14,6 +14,7 @@ import java.util.Objects;
  */
 public class User {
     private int id;
+    private String username;
     private String email;
     private LocalDateTime dateCreated;
 
@@ -25,6 +26,14 @@ public class User {
 	this.id = id;
     }
 
+    public String getUsername() {
+	return username;
+    }
+    
+    public void setUsername(String username) {
+	this.username = username;
+    }
+    
     public String getEmail() {
 	return email;
     }
@@ -43,10 +52,11 @@ public class User {
 
     @Override
     public int hashCode() {
-	int hash = 5;
-	hash = 41 * hash + this.id;
-	hash = 41 * hash + Objects.hashCode(this.email);
-	hash = 41 * hash + Objects.hashCode(this.dateCreated);
+	int hash = 3;
+	hash = 43 * hash + this.id;
+	hash = 43 * hash + Objects.hashCode(this.username);
+	hash = 43 * hash + Objects.hashCode(this.email);
+	hash = 43 * hash + Objects.hashCode(this.dateCreated);
 	return hash;
     }
 
@@ -63,6 +73,9 @@ public class User {
 	}
 	final User other = (User) obj;
 	if (this.id != other.id) {
+	    return false;
+	}
+	if (!Objects.equals(this.username, other.username)) {
 	    return false;
 	}
 	if (!Objects.equals(this.email, other.email)) {

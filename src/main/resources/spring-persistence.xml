@@ -55,13 +55,28 @@
 	<property name="jdbcTemplate" ref="jdbcTemplate"/>
     </bean>
     
+    <bean id="powerDao"
+	  class="com.sg.superperson2.dao.PowerDaoJdbc">
+	<property name="jdbcTemplate" ref="jdbcTemplate"/>
+    </bean>
+    
     <bean id="sightingDao"
 	  class="com.sg.superperson2.dao.SightingDaoJdbc">
 	<property name="jdbcTemplate" ref="jdbcTemplate"/>
     </bean>
     
+    <bean id="sightingSuperpersonDao"
+	  class="com.sg.superperson2.dao.SightingSuperpersonDaoJdbc">
+	<property name="jdbcTemplate" ref="jdbcTemplate"/>
+    </bean>
+    
     <bean id="superpersonDao"
 	  class="com.sg.superperson2.dao.SuperpersonDaoJdbc">
+	<property name="jdbcTemplate" ref="jdbcTemplate"/>
+    </bean>
+    
+    <bean id="userDao"
+	  class="com.sg.superperson2.dao.UserDaoJdbc">
 	<property name="jdbcTemplate" ref="jdbcTemplate"/>
     </bean>
 </beans>

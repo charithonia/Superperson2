@@ -15,8 +15,8 @@ import com.sg.superperson2.model.SuperpersonOrganization;
  */
 public interface SuperpersonOrganizationDao {
     
-    public void addSuperpersonOrganization(SuperpersonOrganization
-	    superpersonOrganization);
+    public SuperpersonOrganization addSuperpersonOrganization(
+	    SuperpersonOrganization superpersonOrganization);
     
     public void removeSuperpersonOrganization(SuperpersonOrganization
 	    superpersonOrganization);

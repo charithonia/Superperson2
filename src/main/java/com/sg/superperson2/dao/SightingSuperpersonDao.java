@@ -15,12 +15,10 @@ import com.sg.superperson2.model.SightingSuperperson;
  */
 public interface SightingSuperpersonDao {
     
-    public void addSightingSuperperson(SightingSuperperson sightingSuperperson);
+    public SightingSuperperson addSightingSuperperson(
+	    SightingSuperperson sightingSuperperson);
     
     public void removeSightingSuperperson(SightingSuperperson
-	    sightingSuperperson);
-    
-    public void updateSightingSuperperson(SightingSuperperson
 	    sightingSuperperson);
     
     public List<SightingSuperperson> getAllSightingSuperpersons();

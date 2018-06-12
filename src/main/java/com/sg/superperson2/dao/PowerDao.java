@@ -16,7 +16,7 @@ import com.sg.superperson2.model.Superperson;
  */
 public interface PowerDao {
     
-    public void addPower(Power power);
+    public Power addPower(Power power);
     
     public void removePower(Power power);
     
@@ -25,8 +25,6 @@ public interface PowerDao {
     public List<Power> getAllPowers();
     
     public Power getPowerById(int id);
-    
-    public Power getPowerByName(String name);
-    
+        
     public List<Power> getPowersBySuperperson(Superperson superperson);
 }
