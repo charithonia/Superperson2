@@ -89,4 +89,8 @@
 	  class="com.sg.superperson2.dao.UserDaoJdbc">
 	<property name="jdbcTemplate" ref="jdbcTemplate"/>
     </bean>
+    
+    <bean id="addressService"
+	  class="com.sg.superperson2.service.AddressServiceDefault">
+    </bean>
 </beans>

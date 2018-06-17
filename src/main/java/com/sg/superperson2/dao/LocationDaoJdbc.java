@@ -60,14 +60,21 @@ public class LocationDaoJdbc implements LocationDao {
     
     @Override
     public Location addLocation(Location location) {
-	// Add location's address to database
-	addressDao.addAddress(location.getAddress());
+	
+	// empty address check
+	Integer addressId;
+	if (location.getAddress() != null) {
+	    addressId = location.getAddress().getId();
+	}
+	else {
+	    addressId = null;
+	}
 	
 	jdbcTemplate.update(SQL_INSERT_LOCATION,
 		location.getLatitude(),
 		location.getLongitude(),
 		location.getName(),
-		location.getAddress().getId());
+		addressId);
 	
 	int id = jdbcTemplate.queryForObject("select last_insert_id()",
 		Integer.class);
@@ -78,16 +85,8 @@ public class LocationDaoJdbc implements LocationDao {
     
     @Override
     public void removeLocation(Location location) {
-	
-	// Get location's address
-	Address address = new Address();
-	address.setId(location.getAddress().getId());
-	
 	jdbcTemplate.update(SQL_DELETE_LOCATION,
 		location.getId());
-	
-	// Remove address
-	addressDao.removeAddress(address);
     }
     
     @Override

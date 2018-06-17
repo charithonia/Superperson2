@@ -40,15 +40,12 @@ public class LocationDaoTest {
     @Inject
     LocationDao locationDao;
     
-    // Test database contains 3 addresses, 3 locations
+    // Test database contains 3 locations
+    private final int N_LOCS = 3;
     
     @Test
     @Transactional
     public void testAddGetRemoveLocation() {
-	
-	// prerequisites
-	//Address adr1 = new Address();
-	//adr1.setId(1);
 	
 	// testing
 	Location loc1 = new Location();
@@ -69,7 +66,7 @@ public class LocationDaoTest {
 	
 	resultList = locationDao.getAllLocations();
 	
-	assertTrue(resultList.size() == 5);
+	assertTrue(resultList.size() == N_LOCS + 2);
 	
 	result = locationDao.getLocationById(loc1.getId());
 	
@@ -87,24 +84,11 @@ public class LocationDaoTest {
 	locationDao.removeLocation(loc1);
 	resultList = locationDao.getAllLocations();
 	
-	assertTrue(resultList.size() == 4);
+	assertTrue(resultList.size() == N_LOCS + 1);
 	
 	locationDao.removeLocation(loc2);
 	resultList = locationDao.getAllLocations();
 	
-	assertTrue(resultList.size() == 3);
-    }
-    
-    @Test
-    @Transactional
-    public void testRemoveLocationAddress() {
-	Location loc = new Location();
-	locationDao.addLocation(loc);
-	Address adr = loc.getAddress();
-	
-	locationDao.removeLocation(loc);
-	Address result = addressDao.getAddressById(adr.getId());
-	
-	assertNull(result);
+	assertTrue(resultList.size() == N_LOCS);
     }
 }

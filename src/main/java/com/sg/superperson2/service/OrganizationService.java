@@ -7,21 +7,21 @@ package com.sg.superperson2.service;
 
 import java.util.List;
 
-import com.sg.superperson2.model.Address;
+import com.sg.superperson2.model.Organization;
 
 /**
  *
  * @author main
  */
-public interface AddressService {
+public interface OrganizationService {
     
-    public Address addAddress(Address address);
+    public Organization addOrganization();
     
-    public void removeAddress(Address address);
+    public void removeOrganization();
     
-    public void updateAddress(Address address);
+    public void updateOrganization();
     
-    public List<Address> getAllAddresses();
+    public List<Organization> getAllOrganizations();
     
-    public Address getAddressById(int id);
+    public Organization getOrganizationById(int id);
 }

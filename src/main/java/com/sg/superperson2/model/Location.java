@@ -18,11 +18,6 @@ public class Location {
     private double longitude;
     
     private Address address;
-
-    public Location() {
-	Address blankAddress = new Address();
-	address = blankAddress;
-    }
     
     public int getId() {
 	return id;

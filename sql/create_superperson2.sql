@@ -4,11 +4,11 @@ use superperson2;
 
 create table `address` (
 	`id` int not null auto_increment,
-    `number` varchar(10),
-    `street` varchar(50),
-    `city` varchar(50),
-    `state` varchar(2),
-    `zip` varchar(10),
+    `number` varchar(10) not null,
+    `street` varchar(50) not null,
+    `city` varchar(50) not null,
+    `state` varchar(2) not null,
+    `zip` varchar(10) not null,
     primary key (`id`)
 );
 
