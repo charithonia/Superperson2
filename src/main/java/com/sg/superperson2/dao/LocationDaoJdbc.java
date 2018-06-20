@@ -36,7 +36,7 @@ public class LocationDaoJdbc implements LocationDao {
 	    + "latitude = ?, "
 	    + "longitude = ?, "
 	    + "name = ?, "
-	    + "addressId = ? "
+	    + "address_id = ? "
 	    + "where id = ?";
     
     private final String SQL_SELECT_LOCATION

@@ -66,26 +66,6 @@ public class Address {
     public void setZip(String zip) {
 	this.zip = zip;
     }
-    
-    public boolean isMatch(Address otherAddress) {
-	if (!number.equalsIgnoreCase(otherAddress.getNumber())) {
-	    return false;
-	}
-	if (!street.equalsIgnoreCase(otherAddress.getStreet())) {
-	    return false;
-	}
-	if (!city.equalsIgnoreCase(otherAddress.getCity())) {
-	    return false;
-	}
-	if (!state.equalsIgnoreCase(otherAddress.getState())) {
-	    return false;
-	}
-	if (!zip.equalsIgnoreCase(otherAddress.getZip())) {
-	    return false;
-	}
-	
-	return true;
-    }
 
     @Override
     public int hashCode() {

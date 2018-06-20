@@ -7,6 +7,7 @@ package com.sg.superperson2.service;
 
 import java.util.List;
 
+import com.sg.superperson2.exception.InvalidObjectException;
 import com.sg.superperson2.model.Address;
 
 /**
@@ -15,7 +16,8 @@ import com.sg.superperson2.model.Address;
  */
 public interface AddressService {
     
-    public Address addAddress(Address address);
+    public Address addAddress(Address address)
+	    throws InvalidObjectException;
     
     public void removeAddress(Address address);
     

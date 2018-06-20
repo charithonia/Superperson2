@@ -93,4 +93,8 @@
     <bean id="addressService"
 	  class="com.sg.superperson2.service.AddressServiceDefault">
     </bean>
+    
+    <bean id="locationService"
+	  class="com.sg.superperson2.service.LocationServiceDefault">
+    </bean>
 </beans>

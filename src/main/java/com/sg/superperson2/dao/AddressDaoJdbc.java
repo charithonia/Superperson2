@@ -24,7 +24,7 @@ public class AddressDaoJdbc implements AddressDao {
     // sql
     private final String SQL_INSERT_ADDRESS =
 	    "insert into address "
-	    + "(number, city, street, state, zip) "
+	    + "(number, street, city, state, zip) "
 	    + "values(?, ?, ?, ?, ?)";
     
     private final String SQL_DELETE_ADDRESS =

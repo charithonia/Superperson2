@@ -35,7 +35,7 @@ import com.sg.superperson2.model.Address;
 public class AddressDaoTest {
     
     @Inject
-    AddressDao addressDao;
+    AddressDao adrDao;
     
     // Test database already contains 3 addresses
     
@@ -56,17 +56,17 @@ public class AddressDaoTest {
 	adr2.setState("OH");
 	adr2.setZip("01234-0123");
 	
-	addressDao.addAddress(adr1);
-	addressDao.addAddress(adr2);
+	adrDao.addAddress(adr1);
+	adrDao.addAddress(adr2);
 	
 	Address result;
 	List<Address> resultList;
 	
-	resultList = addressDao.getAllAddresses();
+	resultList = adrDao.getAllAddresses();
 	
 	assertTrue(resultList.size() == 5);
 	
-	result = addressDao.getAddressById(adr1.getId());
+	result = adrDao.getAddressById(adr1.getId());
 	
 	assertNotNull(result);
 	assertEquals(adr1.getNumber(), "123");
@@ -75,7 +75,7 @@ public class AddressDaoTest {
 	assertEquals(adr1.getState(), "AZ");
 	assertEquals(adr1.getZip(), "01234");
 	
-	result = addressDao.getAddressById(adr2.getId());
+	result = adrDao.getAddressById(adr2.getId());
 	
 	assertNotNull(result);
 	assertEquals(adr2.getNumber(), "1234");
@@ -84,15 +84,40 @@ public class AddressDaoTest {
 	assertEquals(adr2.getState(), "OH");
 	assertEquals(adr2.getZip(), "01234-0123");
 	
-	addressDao.removeAddress(adr1);
-	resultList = addressDao.getAllAddresses();
+	adrDao.removeAddress(adr1);
+	resultList = adrDao.getAllAddresses();
 	
 	assertTrue(resultList.size() == 4);
 	
-	addressDao.removeAddress(adr2);
-	resultList = addressDao.getAllAddresses();
+	adrDao.removeAddress(adr2);
+	resultList = adrDao.getAllAddresses();
 	
 	assertTrue(resultList.size() == 3);
+    }
+    
+    @Test
+    @Transactional
+    public void testUpdateAddress() {
+	Address adr = new Address();
+	adr.setNumber("123");
+	adr.setStreet("Test St.");
+	adr.setCity("Test City");
+	adr.setState("OH");
+	adr.setZip("12345");
+	
+	adr = adrDao.addAddress(adr);
+	
+	Address adrUpdated = adr;
+	adrUpdated.setStreet("Renamed St.");
+	adrUpdated.setZip("12345-6789");
+	
+	adrDao.updateAddress(adrUpdated);
+	
+	assertEquals("123", adrUpdated.getNumber());
+	assertEquals("Renamed St.", adrUpdated.getStreet());
+	assertEquals("Test City", adrUpdated.getCity());
+	assertEquals("OH", adrUpdated.getState());
+	assertEquals("12345-6789", adrUpdated.getZip());
     }
     
     @Test
@@ -103,13 +128,13 @@ public class AddressDaoTest {
 	Address adr2;
 	
 	// test equal
-	adr1 = addressDao.getAddressById(1);
-	adr2 = addressDao.getAddressById(1);
+	adr1 = adrDao.getAddressById(1);
+	adr2 = adrDao.getAddressById(1);
 	
 	assertTrue(adr1.equals(adr2));
 	
 	// test not equal
-	adr2 = addressDao.getAddressById(2);
+	adr2 = adrDao.getAddressById(2);
 	
 	assertFalse(adr1.equals(adr2));
     }
