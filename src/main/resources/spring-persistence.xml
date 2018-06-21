@@ -97,4 +97,8 @@
     <bean id="locationService"
 	  class="com.sg.superperson2.service.LocationServiceDefault">
     </bean>
+    
+    <bean id="powerService"
+	  class="com.sg.superperson2.service.PowerServiceDefault">
+    </bean>
 </beans>

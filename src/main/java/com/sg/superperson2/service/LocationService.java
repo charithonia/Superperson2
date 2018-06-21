@@ -7,7 +7,7 @@ package com.sg.superperson2.service;
 
 import java.util.List;
 
-import com.sg.superperson2.exception.InvalidObjectException;
+import com.sg.superperson2.exception.*;
 import com.sg.superperson2.model.Location;
 
 /**
@@ -17,11 +17,12 @@ import com.sg.superperson2.model.Location;
 public interface LocationService {
     
     public Location addLocation(Location location)
-	    throws InvalidObjectException;
+	    throws InvalidObjectException, DuplicateObjectException;
     
     public void removeLocation(Location location);
     
-    public void updateLocation(Location location);
+    public void updateLocation(Location location)
+	    throws InvalidObjectException;
     
     public List<Location> getAllLocations();
     

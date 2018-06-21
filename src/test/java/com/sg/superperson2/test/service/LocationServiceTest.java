@@ -19,7 +19,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.sg.superperson2.exception.InvalidObjectException;
+import com.sg.superperson2.exception.*;
 import com.sg.superperson2.model.Address;
 import com.sg.superperson2.model.Location;
 import com.sg.superperson2.service.AddressService;
@@ -43,10 +43,10 @@ public class LocationServiceTest {
     @Test
     @Transactional
     public void testAddLocationWithoutAddress()
-	    throws InvalidObjectException {
+	    throws InvalidObjectException, DuplicateObjectException {
 	Location loc = new Location();
-	loc.setLatitude(0.0);
-	loc.setLongitude(0.0);
+	loc.setLatitude(0.9);
+	loc.setLongitude(0.9);
 	
 	loc = locService.addLocation(loc);
 	
@@ -58,10 +58,10 @@ public class LocationServiceTest {
     @Test
     @Transactional
     public void testAddLocationWithAddress()
-	    throws InvalidObjectException {
+	    throws InvalidObjectException, DuplicateObjectException {
 	Location loc = new Location();
-	loc.setLatitude(0.0);
-	loc.setLongitude(0.0);
+	loc.setLatitude(0.9);
+	loc.setLongitude(0.9);
 	
 	Address adr = new Address();
 	adr.setNumber("123");
@@ -82,10 +82,11 @@ public class LocationServiceTest {
     
     @Test
     @Transactional
-    public void testUpdateLocationAddress() throws InvalidObjectException {
+    public void testUpdateLocationAddress()
+	    throws InvalidObjectException, DuplicateObjectException {
 	Location loc = new Location();
-	loc.setLatitude(0.0);
-	loc.setLongitude(0.0);
+	loc.setLatitude(0.9);
+	loc.setLongitude(0.9);
 	
 	loc = locService.addLocation(loc);
 	
@@ -111,5 +112,38 @@ public class LocationServiceTest {
 	assertEquals("Test City", resultAdr.getCity());
 	assertEquals("OH", resultAdr.getState());
 	assertEquals("12345", resultAdr.getZip());
+    }
+    
+    @Test
+    @Transactional
+    public void testInvalidLocation()
+	    throws DuplicateObjectException {
+	Location loc1 = new Location();
+	loc1.setLatitude(90.1);
+	loc1.setLongitude(180.1);
+	
+	Location loc2 = new Location();
+	loc2.setLatitude(-90.1);
+	loc2.setLongitude(-180.1);
+	
+	boolean thrown = false;
+	try {
+	    locService.addLocation(loc1);
+	}
+	catch (InvalidObjectException ex) {
+	    thrown = true;
+	}
+	
+	assertTrue(thrown);
+	
+	thrown = false;
+	try {
+	    locService.addLocation(loc2);
+	}
+	catch (InvalidObjectException ex) {
+	    thrown = true;
+	}
+	
+	assertTrue(thrown);
     }
 }

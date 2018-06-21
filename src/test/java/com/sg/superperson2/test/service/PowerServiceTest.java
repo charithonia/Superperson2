@@ -12,15 +12,16 @@ import org.junit.After;
 import org.junit.Before;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import org.junit.runner.RunWith;
 
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.sg.superperson2.exception.InvalidObjectException;
-import com.sg.superperson2.model.Address;
-import com.sg.superperson2.service.AddressService;
+import com.sg.superperson2.exception.*;
+import com.sg.superperson2.model.Power;
+import com.sg.superperson2.service.PowerService;
 
 /**
  *
@@ -29,26 +30,20 @@ import com.sg.superperson2.service.AddressService;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:test-applicationContext.xml"})
 @Transactional
-public class AddressServiceTest {
+public class PowerServiceTest {
     
     @Inject
-    AddressService adrService;
+    PowerService powService;
     
     @Test
     @Transactional
-    public void testAddGetRemoveAddress() {
-	Address adr = new Address();
-    }
-
-    
-    @Test
-    @Transactional
-    public void testInvalidAddress() {
-	Address adr1 = new Address();
+    public void testInvalidPower()
+	    throws DuplicateObjectException {
+	Power pow = new Power();
 	
 	boolean thrown = false;
 	try {
-	    adrService.addAddress(adr1);
+	    powService.addPower(pow);
 	}
 	catch (InvalidObjectException ex) {
 	    thrown = true;

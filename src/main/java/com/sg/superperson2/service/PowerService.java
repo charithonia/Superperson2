@@ -7,6 +7,7 @@ package com.sg.superperson2.service;
 
 import java.util.List;
 
+import com.sg.superperson2.exception.*;
 import com.sg.superperson2.model.Power;
 
 /**
@@ -15,11 +16,13 @@ import com.sg.superperson2.model.Power;
  */
 public interface PowerService {
     
-    public Power addPower(Power power);
+    public Power addPower(Power power)
+	    throws InvalidObjectException, DuplicateObjectException;
     
     public void removePower(Power power);
     
-    public void updatePower(Power power);
+    public void updatePower(Power power)
+	    throws InvalidObjectException, DuplicateObjectException;
     
     public List<Power> getAllPowers();
     
