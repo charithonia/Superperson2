@@ -16,8 +16,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sg.superperson2.exception.*;
-import com.sg.superperson2.model.Power;
-import com.sg.superperson2.service.PowerService;
+import com.sg.superperson2.model.Sighting;
+import com.sg.superperson2.service.SightingService;
 
 /**
  *
@@ -26,20 +26,19 @@ import com.sg.superperson2.service.PowerService;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:test-applicationContext.xml"})
 @Transactional
-public class PowerServiceTest {
+public class SightingServiceTest {
     
     @Inject
-    PowerService powService;
+    SightingService sigService;
     
     @Test
     @Transactional
-    public void testInvalidPower()
-	    throws DuplicateObjectException {
-	Power pow = new Power();
+    public void testInvalidSighting() {
+	Sighting sig = new Sighting();
 	
 	boolean thrown = false;
 	try {
-	    powService.addPower(pow);
+	    sigService.addSighting(sig);
 	}
 	catch (InvalidObjectException ex) {
 	    thrown = true;

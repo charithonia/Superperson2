@@ -98,7 +98,23 @@
 	  class="com.sg.superperson2.service.LocationServiceDefault">
     </bean>
     
+    <bean id="organizationService"
+	  class="com.sg.superperson2.service.OrganizationServiceDefault">
+    </bean>
+    
     <bean id="powerService"
 	  class="com.sg.superperson2.service.PowerServiceDefault">
+    </bean>
+    
+    <bean id="sightingService"
+	  class="com.sg.superperson2.service.SightingServiceDefault">
+    </bean>
+    
+    <bean id="superpersonService"
+	  class="com.sg.superperson2.service.SuperpersonServiceDefault">
+    </bean>
+    
+    <bean id="userService"
+	  class="com.sg.superperson2.service.UserServiceDefault">
     </bean>
 </beans>

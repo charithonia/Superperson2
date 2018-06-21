@@ -7,6 +7,7 @@ package com.sg.superperson2.service;
 
 import java.util.List;
 
+import com.sg.superperson2.exception.*;
 import com.sg.superperson2.model.Organization;
 
 /**
@@ -15,11 +16,13 @@ import com.sg.superperson2.model.Organization;
  */
 public interface OrganizationService {
     
-    public Organization addOrganization();
+    public Organization addOrganization(Organization org)
+	    throws InvalidObjectException, DuplicateObjectException;
     
-    public void removeOrganization();
+    public void removeOrganization(Organization org);
     
-    public void updateOrganization();
+    public void updateOrganization(Organization org)
+	    throws InvalidObjectException;
     
     public List<Organization> getAllOrganizations();
     

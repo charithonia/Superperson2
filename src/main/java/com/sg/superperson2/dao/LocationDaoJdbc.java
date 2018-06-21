@@ -61,7 +61,7 @@ public class LocationDaoJdbc implements LocationDao {
     @Override
     public Location addLocation(Location location) {
 	
-	// empty address check
+	// Address check
 	Integer addressId;
 	if (location.getAddress() != null) {
 	    addressId = location.getAddress().getId();
@@ -91,11 +91,21 @@ public class LocationDaoJdbc implements LocationDao {
     
     @Override
     public void updateLocation(Location location) {
+	
+	// Address check
+	Integer addressId;
+	if (location.getAddress() != null) {
+	    addressId = location.getAddress().getId();
+	}
+	else {
+	    addressId = null;
+	}
+	
 	jdbcTemplate.update(SQL_UPDATE_LOCATION,
 		location.getLongitude(),
 		location.getLatitude(),
 		location.getName(),
-		location.getAddress().getId(),
+		addressId,
 		location.getId());
     }
     

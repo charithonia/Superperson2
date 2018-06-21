@@ -7,6 +7,7 @@ package com.sg.superperson2.service;
 
 import java.util.List;
 
+import com.sg.superperson2.exception.*;
 import com.sg.superperson2.model.User;
 
 /**
@@ -15,11 +16,13 @@ import com.sg.superperson2.model.User;
  */
 public interface UserService {
     
-    public User addUser(User user);
+    public User addUser(User user)
+	    throws InvalidObjectException, DuplicateObjectException;
     
     public void removeUser(User user);
     
-    public void updateUser(User user);
+    public void updateUser(User user)
+	    throws InvalidObjectException;
     
     public List<User> getAllUsers();
     

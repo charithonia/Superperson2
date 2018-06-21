@@ -16,8 +16,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sg.superperson2.exception.*;
-import com.sg.superperson2.model.Power;
-import com.sg.superperson2.service.PowerService;
+import com.sg.superperson2.model.User;
+import com.sg.superperson2.service.UserService;
 
 /**
  *
@@ -26,25 +26,60 @@ import com.sg.superperson2.service.PowerService;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:test-applicationContext.xml"})
 @Transactional
-public class PowerServiceTest {
+public class UserServiceTest {
     
     @Inject
-    PowerService powService;
+    UserService usrService;
     
     @Test
     @Transactional
-    public void testInvalidPower()
+    public void testInvalidUser()
 	    throws DuplicateObjectException {
-	Power pow = new Power();
+	
+	// No username
+	User usr1 = new User();
+	usr1.setEmail("test@example.com");
+	
+	// No email
+	User usr2 = new User();
+	usr2.setUsername("test_user");
 	
 	boolean thrown = false;
 	try {
-	    powService.addPower(pow);
+	    usrService.addUser(usr1);
 	}
 	catch (InvalidObjectException ex) {
 	    thrown = true;
 	}
 	
 	assertTrue(thrown);
+	
+	thrown = false;
+	try {
+	    usrService.addUser(usr2);
+	}
+	catch (InvalidObjectException ex) {
+	    thrown = true;
+	}
+	
+	assertTrue(thrown);
+    }
+    
+    @Test
+    @Transactional
+    public void testAssignedTimestamp()
+	    throws InvalidObjectException, DuplicateObjectException {
+	User usr = new User();
+	usr.setUsername("test_user");
+	usr.setEmail("test@example.com");
+	
+	User result = usrService.addUser(usr);
+	
+	boolean hasTimestamp = false;
+	if (result.getDateCreated() != null) {
+	    hasTimestamp = true;
+	}
+	
+	assertTrue(hasTimestamp);
     }
 }

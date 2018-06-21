@@ -65,7 +65,7 @@ public class OrganizationDaoJdbc implements OrganizationDao {
     @Override
     public Organization addOrganization(Organization org) {
 	
-	// empty location check
+	// Location check
 	Integer locationId;
 	if (org.getLocation() != null) {
 	    locationId = org.getLocation().getId();
@@ -95,11 +95,21 @@ public class OrganizationDaoJdbc implements OrganizationDao {
     
     @Override
     public void updateOrganization(Organization org) {
+	
+	// Location check
+	Integer locationId;
+	if (org.getLocation() != null) {
+	    locationId = org.getLocation().getId();
+	}
+	else {
+	    locationId = null;
+	}
+	
 	jdbcTemplate.update(SQL_UPDATE_ORGANIZATION,
 		org.getName(),
 		org.getHead(),
 		org.getDescription(),
-		org.getLocation().getId(),
+		locationId,
 		org.getId());
     }
     

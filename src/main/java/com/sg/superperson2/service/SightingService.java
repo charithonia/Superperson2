@@ -7,6 +7,7 @@ package com.sg.superperson2.service;
 
 import java.util.List;
 
+import com.sg.superperson2.exception.*;
 import com.sg.superperson2.model.Sighting;
 
 /**
@@ -15,11 +16,13 @@ import com.sg.superperson2.model.Sighting;
  */
 public interface SightingService {
     
-    public Sighting addSighting(Sighting sighting);
+    public Sighting addSighting(Sighting sighting)
+	    throws InvalidObjectException;
     
     public void removeSighting(Sighting sighting);
     
-    public void updateSighting(Sighting sighting);
+    public void updateSighting(Sighting sighting)
+	    throws InvalidObjectException;
     
     public List<Sighting> getAllSightings();
     

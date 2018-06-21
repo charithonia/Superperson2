@@ -18,7 +18,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.sg.superperson2.exception.InvalidObjectException;
+import com.sg.superperson2.exception.*;
 import com.sg.superperson2.model.Address;
 import com.sg.superperson2.service.AddressService;
 
@@ -33,13 +33,6 @@ public class AddressServiceTest {
     
     @Inject
     AddressService adrService;
-    
-    @Test
-    @Transactional
-    public void testAddGetRemoveAddress() {
-	Address adr = new Address();
-    }
-
     
     @Test
     @Transactional

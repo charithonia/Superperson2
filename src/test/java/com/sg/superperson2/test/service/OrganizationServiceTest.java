@@ -9,6 +9,8 @@ import javax.inject.Inject;
 
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import org.junit.runner.RunWith;
 
 import org.springframework.test.context.ContextConfiguration;
@@ -16,8 +18,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sg.superperson2.exception.*;
-import com.sg.superperson2.model.Power;
-import com.sg.superperson2.service.PowerService;
+import com.sg.superperson2.model.Organization;
+import com.sg.superperson2.service.OrganizationService;
 
 /**
  *
@@ -26,20 +28,20 @@ import com.sg.superperson2.service.PowerService;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:test-applicationContext.xml"})
 @Transactional
-public class PowerServiceTest {
+public class OrganizationServiceTest {
     
     @Inject
-    PowerService powService;
+    OrganizationService orgService;
     
     @Test
     @Transactional
-    public void testInvalidPower()
+    public void testInvalidOrganization()
 	    throws DuplicateObjectException {
-	Power pow = new Power();
+	Organization org = new Organization();
 	
 	boolean thrown = false;
 	try {
-	    powService.addPower(pow);
+	    orgService.addOrganization(org);
 	}
 	catch (InvalidObjectException ex) {
 	    thrown = true;

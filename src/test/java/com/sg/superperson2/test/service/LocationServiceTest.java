@@ -8,8 +8,6 @@ package com.sg.superperson2.test.service;
 import javax.inject.Inject;
 
 import org.junit.Test;
-import org.junit.After;
-import org.junit.Before;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -74,10 +72,12 @@ public class LocationServiceTest {
 	
 	loc = locService.addLocation(loc);
 	
-	Location result = locService.getLocationById(loc.getId());
+	Address result = loc.getAddress();
 	
 	assertNotNull(result);
-	assertNotNull(result.getAddress());
+	
+	// Nonzero address means address successfully added
+	assertTrue(result.getId() != 0);
     }
     
     @Test
@@ -112,6 +112,9 @@ public class LocationServiceTest {
 	assertEquals("Test City", resultAdr.getCity());
 	assertEquals("OH", resultAdr.getState());
 	assertEquals("12345", resultAdr.getZip());
+	
+	// Nonzero id means address successfully added
+	assertTrue(resultAdr.getId() != 0);
     }
     
     @Test
