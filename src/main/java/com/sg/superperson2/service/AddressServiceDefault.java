@@ -13,6 +13,7 @@ import javax.inject.Inject;
 import com.sg.superperson2.dao.AddressDao;
 import com.sg.superperson2.exception.*;
 import com.sg.superperson2.model.Address;
+import com.sg.superperson2.model.AddressCommandModel;
 
 /**
  *
@@ -40,8 +41,26 @@ public class AddressServiceDefault implements AddressService {
     }
     
     @Override
-    public void removeAddress(Address address) {
+    public Address addAddress(AddressCommandModel adrCM)
+	    throws InvalidObjectException {
+	Address address = convertFromCommand(adrCM);
+	return addAddress(address);
+    }
+    
+    @Override
+    public void removeAddress(Address address)
+	    throws NotFoundException {
+	if (!exists(address)) {
+	    throw new NotFoundException("Address not found.");
+	}
 	addressDao.removeAddress(address);
+    }
+    
+    @Override
+    public void removeAddress(AddressCommandModel adrCM)
+	    throws NotFoundException {
+	Address address = convertFromCommand(adrCM);
+	removeAddress(address);
     }
     
     @Override
@@ -52,6 +71,13 @@ public class AddressServiceDefault implements AddressService {
 	}
 	
 	addressDao.updateAddress(address);
+    }
+    
+    @Override
+    public void updateAddress(AddressCommandModel adrCM)
+	    throws InvalidObjectException {
+	Address address = convertFromCommand(adrCM);
+	updateAddress(address);
     }
     
     @Override
@@ -127,6 +153,40 @@ public class AddressServiceDefault implements AddressService {
 	}
 
 	return (matches);
+    }
+    
+    private boolean exists(Address address) {
+	Address result = getAddressById(address.getId());
+	return !(result == null);
+    }
+    
+    private AddressCommandModel convertToCommand(Address address) {
+	AddressCommandModel adrCM = new AddressCommandModel();
+	adrCM.setId(address.getId());
+	adrCM.setNumber(address.getNumber());
+	adrCM.setStreet(address.getStreet());
+	adrCM.setCity(address.getCity());
+	adrCM.setState(address.getState());
+	adrCM.setZip(address.getZip());
+	
+	return adrCM;
+    }
+    
+    private Address convertFromCommand(AddressCommandModel adrCM) {
+	Address address = new Address();
+	
+	int id = adrCM.getId();
+	if (id != 0) {
+	    address.setId(id);
+	}
+	
+	address.setNumber(adrCM.getNumber());
+	address.setStreet(adrCM.getStreet());
+	address.setCity(adrCM.getCity());
+	address.setState(adrCM.getState());
+	address.setZip(adrCM.getZip());
+	
+	return address;
     }
     
     /**

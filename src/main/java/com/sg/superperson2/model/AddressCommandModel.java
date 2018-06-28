@@ -5,13 +5,11 @@
  */
 package com.sg.superperson2.model;
 
-import java.util.Objects;
-
 /**
  *
  * @author main
  */
-public class Address {
+public class AddressCommandModel {
     private int id;
     private String number;
     private String street;
@@ -19,10 +17,6 @@ public class Address {
     private String state;
     private String zip;
 
-    public Address() {
-	id = 0;
-    }
-    
     public int getId() {
 	return id;
     }
@@ -69,50 +63,5 @@ public class Address {
 
     public void setZip(String zip) {
 	this.zip = zip;
-    }
-
-    @Override
-    public int hashCode() {
-	int hash = 5;
-	hash = 41 * hash + this.id;
-	hash = 41 * hash + Objects.hashCode(this.number);
-	hash = 41 * hash + Objects.hashCode(this.street);
-	hash = 41 * hash + Objects.hashCode(this.city);
-	hash = 41 * hash + Objects.hashCode(this.state);
-	hash = 41 * hash + Objects.hashCode(this.zip);
-	return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-	if (this == obj) {
-	    return true;
-	}
-	if (obj == null) {
-	    return false;
-	}
-	if (getClass() != obj.getClass()) {
-	    return false;
-	}
-	final Address other = (Address) obj;
-	if (this.id != other.id) {
-	    return false;
-	}
-	if (!Objects.equals(this.number, other.number)) {
-	    return false;
-	}
-	if (!Objects.equals(this.street, other.street)) {
-	    return false;
-	}
-	if (!Objects.equals(this.city, other.city)) {
-	    return false;
-	}
-	if (!Objects.equals(this.state, other.state)) {
-	    return false;
-	}
-	if (!Objects.equals(this.zip, other.zip)) {
-	    return false;
-	}
-	return true;
     }
 }

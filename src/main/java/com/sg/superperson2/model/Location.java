@@ -19,6 +19,10 @@ public class Location {
     
     private Address address;
     
+    public Location() {
+	id = 0;
+    }
+    
     public int getId() {
 	return id;
     }

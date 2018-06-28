@@ -13,6 +13,7 @@ import com.sg.superperson2.dao.LocationDao;
 import com.sg.superperson2.exception.*;
 import com.sg.superperson2.model.Address;
 import com.sg.superperson2.model.Location;
+import com.sg.superperson2.model.LocationCommandModel;
 
 /**
  *
@@ -30,10 +31,10 @@ public class LocationServiceDefault implements LocationService {
     public Location addLocation(Location location)
 	    throws InvalidObjectException, DuplicateObjectException {
 	if (!isValid(location)) {
-	    throw new InvalidObjectException();
+	    throw new InvalidObjectException("Location invalid.");
 	}
 	if (isDuplicate(location)) {
-	    throw new DuplicateObjectException();
+	    throw new DuplicateObjectException("Location is a duplicate.");
 	}
 	    
 	Address address = location.getAddress();
@@ -46,8 +47,26 @@ public class LocationServiceDefault implements LocationService {
     }
     
     @Override
-    public void removeLocation(Location location) {
+    public Location addLocation(LocationCommandModel locCM)
+	    throws InvalidObjectException, DuplicateObjectException {
+	Location loc = convertFromCommand(locCM);
+	return addLocation(loc);
+    }
+    
+    @Override
+    public void removeLocation(Location location)
+	    throws NotFoundException {
+	if (!exists(location)) {
+	    throw new NotFoundException("Location not found.");
+	}
 	locDao.removeLocation(location);
+    }
+    
+    @Override
+    public void removeLocation(LocationCommandModel locCM)
+	    throws NotFoundException {
+	Location loc = convertFromCommand(locCM);
+	removeLocation(loc);
     }
     
     @Override
@@ -64,6 +83,13 @@ public class LocationServiceDefault implements LocationService {
 	}
 	
 	locDao.updateLocation(location);
+    }
+    
+    @Override
+    public void updateLocation(LocationCommandModel locCM)
+	    throws InvalidObjectException {
+	Location loc = convertFromCommand(locCM);
+	updateLocation(loc);
     }
     
     @Override
@@ -124,5 +150,35 @@ public class LocationServiceDefault implements LocationService {
 	}
 
 	return (matches);
+    }
+    
+    private boolean exists(Location loc) {
+	Location result = getLocationById(loc.getId());
+	return !(result == null);
+    }
+    
+    private LocationCommandModel convertToCommand(Location loc) {
+	LocationCommandModel locCM = new LocationCommandModel();
+	locCM.setId(loc.getId());
+	locCM.setLatitude(loc.getLatitude());
+	locCM.setLongitude(loc.getLongitude());
+	locCM.setName(loc.getName());
+	
+	return locCM;
+    }
+    
+    private Location convertFromCommand(LocationCommandModel locCM) {
+	Location loc = new Location();
+	
+	int id = locCM.getId();
+	if (id != 0) {
+	    loc.setId(id);
+	}
+	
+	loc.setLatitude(locCM.getLatitude());
+	loc.setLongitude(locCM.getLongitude());
+	loc.setName(locCM.getName());
+	
+	return loc;
     }
 }
