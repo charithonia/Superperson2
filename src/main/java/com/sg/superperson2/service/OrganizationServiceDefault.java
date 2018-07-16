@@ -13,6 +13,7 @@ import com.sg.superperson2.dao.OrganizationDao;
 import com.sg.superperson2.exception.*;
 import com.sg.superperson2.model.Location;
 import com.sg.superperson2.model.Organization;
+import com.sg.superperson2.model.OrganizationCommandModel;
 
 /**
  *
@@ -42,8 +43,26 @@ public class OrganizationServiceDefault implements OrganizationService {
     }
     
     @Override
-    public void removeOrganization(Organization org) {
+    public Organization addOrganization(OrganizationCommandModel orgCM)
+	    throws InvalidObjectException, DuplicateObjectException {
+	Organization org = convertFromCommand(orgCM);
+	return addOrganization(org);
+    }
+    
+    @Override
+    public void removeOrganization(Organization org)
+	    throws NotFoundException {
+	if (!exists(org)) {
+	    throw new NotFoundException("Organization not found.");
+	}
 	orgDao.removeOrganization(org);
+    }
+    
+    @Override
+    public void removeOrganization(OrganizationCommandModel orgCM)
+	    throws NotFoundException {
+	Organization org = convertFromCommand(orgCM);
+	removeOrganization(org);
     }
     
     @Override
@@ -89,5 +108,35 @@ public class OrganizationServiceDefault implements OrganizationService {
     
     private boolean isMatch(Organization org1, Organization org2) {
 	return org1.getName().equalsIgnoreCase(org2.getName());
+    }
+    
+    private boolean exists(Organization org) {
+	Organization result = getOrganizationById(org.getId());
+	return (result != null);
+    }
+    
+    private Organization convertFromCommand(OrganizationCommandModel orgCM) {
+	Organization org = new Organization();
+	
+	int id = orgCM.getId();
+	if (id != 0) {
+	    org.setId(id);
+	}
+	
+	org.setName(orgCM.getName());
+	org.setHead(orgCM.getHead());
+	org.setDescription(orgCM.getDescription());
+	
+	return org;
+    }
+    
+    private OrganizationCommandModel convertToCommand(Organization org) {
+	OrganizationCommandModel orgCM = new OrganizationCommandModel();
+	orgCM.setId(org.getId());
+	orgCM.setName(org.getName());
+	orgCM.setHead(org.getHead());
+	orgCM.setDescription(org.getDescription());
+	
+	return orgCM;
     }
 }
