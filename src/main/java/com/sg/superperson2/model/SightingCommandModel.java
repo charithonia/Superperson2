@@ -15,9 +15,9 @@ import java.util.List;
 public class SightingCommandModel {
     private int id;
     private LocalDateTime timestamp;
-    
-    private int userId;
+    private int locationId;
     private List<Integer> superpersonIds;
+    private int userId;
 
     public int getId() {
 	return id;
@@ -35,12 +35,12 @@ public class SightingCommandModel {
 	this.timestamp = timestamp;
     }
 
-    public int getUserId() {
-	return userId;
+    public int getLocationId() {
+	return locationId;
     }
 
-    public void setUserId(int userId) {
-	this.userId = userId;
+    public void setLocationId(int locationId) {
+	this.locationId = locationId;
     }
 
     public List<Integer> getSuperpersonIds() {
@@ -49,5 +49,13 @@ public class SightingCommandModel {
 
     public void setSuperpersonIds(List<Integer> superpersonIds) {
 	this.superpersonIds = superpersonIds;
+    }
+
+    public int getUserId() {
+	return userId;
+    }
+
+    public void setUserId(int userId) {
+	this.userId = userId;
     }
 }

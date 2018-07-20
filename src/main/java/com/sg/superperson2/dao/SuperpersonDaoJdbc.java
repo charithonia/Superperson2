@@ -10,10 +10,16 @@ import java.sql.SQLException;
 import java.sql.Date;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
+import com.sg.superperson2.model.Organization;
+import com.sg.superperson2.model.Power;
+import com.sg.superperson2.model.SuperpersonOrganization;
+import com.sg.superperson2.model.SuperpersonPower;
 import com.sg.superperson2.model.Sighting;
 import com.sg.superperson2.model.Superperson;
 
@@ -60,53 +66,124 @@ public class SuperpersonDaoJdbc implements SuperpersonDao {
 	this.jdbcTemplate = jdbcTemplate;
     }
     
+    @Inject
+    OrganizationDao orgDao;
+    
+    @Inject
+    PowerDao powDao;
+    
+    @Inject
+    SuperpersonOrganizationDao supOrgDao;
+    
+    @Inject
+    SuperpersonPowerDao supPowDao;
+    
     @Override
-    public Superperson addSuperperson(Superperson superperson) {
-	Date dob = Date.valueOf(superperson.getDateOfBirth());
+    public Superperson addSuperperson(Superperson sup) {
+	Date dob = Date.valueOf(sup.getDateOfBirth());
 	
 	jdbcTemplate.update(SQL_INSERT_SUPERPERSON,
-		superperson.getName(),
-		superperson.getRealName(),
+		sup.getName(),
+		sup.getRealName(),
 		dob,
-		superperson.getDescription());
+		sup.getDescription());
 	
 	int id = jdbcTemplate.queryForObject("select last_insert_id()",
 		Integer.class);
-	superperson.setId(id);
+	sup.setId(id);
 	
-	return superperson;
+	// Organization bridges
+	List<Organization> orgs = sup.getOrganizations();
+	for (Organization org : orgs) {
+	    SuperpersonOrganization supOrg = new SuperpersonOrganization();
+	    supOrg.setOrganization(org);
+	    supOrg.setSuperperson(sup);
+	    
+	    supOrgDao.addSuperpersonOrganization(supOrg);
+	}
+	
+	// Power bridges
+	List<Power> pows = sup.getPowers();
+	for (Power pow : pows) {
+	    SuperpersonPower supPow = new SuperpersonPower();
+	    supPow.setPower(pow);
+	    supPow.setSuperperson(sup);
+	    
+	    supPowDao.addSuperpersonPower(supPow);
+	}
+	
+	return sup;
     }
     
     @Override
-    public void removeSuperperson(Superperson superperson) {
+    public void removeSuperperson(Superperson sup) {
 	jdbcTemplate.update(SQL_DELETE_SUPERPERSON,
-		superperson.getId());
+		sup.getId());
     }
     
     @Override
-    public void updateSuperperson(Superperson superperson) {
-	Date dob = Date.valueOf(superperson.getDateOfBirth());
+    public void updateSuperperson(Superperson sup) {
+	Date dob = Date.valueOf(sup.getDateOfBirth());
 	
 	jdbcTemplate.update(SQL_UPDATE_SUPERPERSON,
-		superperson.getName(),
-		superperson.getRealName(),
+		sup.getName(),
+		sup.getRealName(),
 		dob,
-		superperson.getDescription(),
-		superperson.getId());
+		sup.getDescription(),
+		sup.getId());
+	
+	// Rebuild bridges
+	List<SuperpersonOrganization> supOrgs = supOrgDao
+		.getSuperpersonOrganizationsBySuperperson(sup);
+	for (SuperpersonOrganization supOrg : supOrgs) {
+	    supOrgDao.removeSuperpersonOrganization(supOrg);
+	}
+	
+	List<Organization> orgs = sup.getOrganizations();
+	for (Organization org : orgs) {
+	    SuperpersonOrganization supOrg = new SuperpersonOrganization();
+	    supOrg.setOrganization(org);
+	    supOrg.setSuperperson(sup);
+	    
+	    supOrgDao.addSuperpersonOrganization(supOrg);
+	}
+	
+	List<SuperpersonPower> supPows = supPowDao
+		.getSuperpersonPowersBySuperperson(sup);
+	for (SuperpersonPower supPow : supPows) {
+	    supPowDao.removeSuperpersonPower(supPow);
+	}
+	
+	List<Power> pows = sup.getPowers();
+	for (Power pow : pows) {
+	    SuperpersonPower supPow = new SuperpersonPower();
+	    supPow.setPower(pow);
+	    supPow.setSuperperson(sup);
+	    
+	    supPowDao.addSuperpersonPower(supPow);
+	}
     }
     
     @Override
     public List<Superperson> getAllSuperpersons() {
-	return jdbcTemplate.query(SQL_SELECT_ALL_SUPERPERSONS,
+	List<Superperson> sups = jdbcTemplate.query(SQL_SELECT_ALL_SUPERPERSONS,
 		new SuperpersonMapper());
+	for (Superperson sup : sups) {
+	    appendData(sup);
+	}
+	
+	return sups;
     }
     
     @Override
     public Superperson getSuperpersonById(int id) {
 	try {
-	    return jdbcTemplate.queryForObject(SQL_SELECT_SUPERPERSON_BY_ID,
+	    Superperson sup = jdbcTemplate.queryForObject(SQL_SELECT_SUPERPERSON_BY_ID,
 		    new SuperpersonMapper(),
 		    id);
+	    appendData(sup);
+	    
+	    return sup;
 	}
 	catch (EmptyResultDataAccessException ex) {
 	    return null;
@@ -118,6 +195,20 @@ public class SuperpersonDaoJdbc implements SuperpersonDao {
 	return jdbcTemplate.query(SQL_SELECT_SUPERPERSONS_BY_SIGHTING,
 		new SuperpersonMapper(),
 		sighting.getId());
+    }
+    
+    private Superperson appendData(Superperson sup) {
+	
+	// Get superperson's organizations
+	List<Organization> orgs = orgDao.getOrganizationsBySuperperson(sup);
+	sup.setOrganizations(orgs);
+	    
+	    
+	// Get superperson's powers
+	List<Power> pows = powDao.getPowersBySuperperson(sup);
+	sup.setPowers(pows);
+	
+	return sup;
     }
     
     private static final class SuperpersonMapper

@@ -49,6 +49,8 @@ public class SuperpersonPowerTest {
 	
 	// prerequisites
 	Power pow = new Power();
+	pow.setName("Test");
+	
 	pow = powerDao.addPower(pow);
 	
 	Superperson sup1 = new Superperson();

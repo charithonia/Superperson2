@@ -7,6 +7,7 @@ package com.sg.superperson2.dao;
 
 import java.util.List;
 
+import com.sg.superperson2.model.Sighting;
 import com.sg.superperson2.model.SightingSuperperson;
 
 /**
@@ -24,4 +25,7 @@ public interface SightingSuperpersonDao {
     public List<SightingSuperperson> getAllSightingSuperpersons();
     
     public SightingSuperperson getSightingSuperpersonById(int id);
+    
+    public List<SightingSuperperson> getSightingSuperpersonsBySighting(
+	    Sighting sighting);
 }

@@ -6,6 +6,8 @@
 package com.sg.superperson2.model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -18,7 +20,15 @@ public class Superperson {
     private String realName;
     private LocalDate dateOfBirth;
     private String description;
+    
+    private List<Organization> organizations;
+    private List<Power> powers;
 
+    public Superperson() {
+	organizations = new ArrayList<>();
+	powers = new ArrayList<>();
+    }
+    
     public int getId() {
 	return id;
     }
@@ -59,14 +69,32 @@ public class Superperson {
 	this.description = description;
     }
 
+    public List<Organization> getOrganizations() {
+	return organizations;
+    }
+
+    public void setOrganizations(List<Organization> organizations) {
+	this.organizations = organizations;
+    }
+
+    public List<Power> getPowers() {
+	return powers;
+    }
+
+    public void setPowers(List<Power> powers) {
+	this.powers = powers;
+    }
+
     @Override
     public int hashCode() {
-	int hash = 7;
-	hash = 23 * hash + this.id;
-	hash = 23 * hash + Objects.hashCode(this.name);
-	hash = 23 * hash + Objects.hashCode(this.realName);
-	hash = 23 * hash + Objects.hashCode(this.dateOfBirth);
-	hash = 23 * hash + Objects.hashCode(this.description);
+	int hash = 3;
+	hash = 31 * hash + this.id;
+	hash = 31 * hash + Objects.hashCode(this.name);
+	hash = 31 * hash + Objects.hashCode(this.realName);
+	hash = 31 * hash + Objects.hashCode(this.dateOfBirth);
+	hash = 31 * hash + Objects.hashCode(this.description);
+	hash = 31 * hash + Objects.hashCode(this.organizations);
+	hash = 31 * hash + Objects.hashCode(this.powers);
 	return hash;
     }
 
@@ -95,6 +123,12 @@ public class Superperson {
 	    return false;
 	}
 	if (!Objects.equals(this.dateOfBirth, other.dateOfBirth)) {
+	    return false;
+	}
+	if (!Objects.equals(this.organizations, other.organizations)) {
+	    return false;
+	}
+	if (!Objects.equals(this.powers, other.powers)) {
 	    return false;
 	}
 	return true;

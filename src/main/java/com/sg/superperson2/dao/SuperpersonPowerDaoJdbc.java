@@ -38,6 +38,9 @@ public class SuperpersonPowerDaoJdbc implements SuperpersonPowerDao {
     private final String SQL_SELECT_SUPERPERSON_POWER =
 	    "select * from superperson_power where id = ?";
     
+    private final String SQL_SELECT_SUPERPERSON_POWERS_BY_SUPERPERSON =
+	    "select * from superperson_power where superperson_id = ?";
+    
     // jdbc
     private JdbcTemplate jdbcTemplate;
     
@@ -80,6 +83,15 @@ public class SuperpersonPowerDaoJdbc implements SuperpersonPowerDao {
 	catch (EmptyResultDataAccessException ex) {
 	    return null;
 	}
+    }
+    
+    @Override
+    public List<SuperpersonPower> getSuperpersonPowersBySuperperson(
+	    Superperson sup) {
+	return jdbcTemplate.query(
+		SQL_SELECT_SUPERPERSON_POWERS_BY_SUPERPERSON,
+		new SuperpersonPowerMapper(),
+		sup.getId());
     }
     
     private final static class SuperpersonPowerMapper

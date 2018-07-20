@@ -6,13 +6,19 @@
 package com.sg.superperson2.service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import com.sg.superperson2.dao.SightingDao;
 import com.sg.superperson2.exception.*;
+import com.sg.superperson2.model.Location;
 import com.sg.superperson2.model.Sighting;
+import com.sg.superperson2.model.SightingCommandModel;
+import com.sg.superperson2.model.SightingSuperperson;
+import com.sg.superperson2.model.Superperson;
+import com.sg.superperson2.model.User;
 
 /**
  *
@@ -22,6 +28,9 @@ public class SightingServiceDefault implements SightingService {
     
     @Inject
     SightingDao sigDao;
+    
+    @Inject
+    SuperpersonService supService;
     
     @Override
     public Sighting addSighting(Sighting sig)
@@ -37,8 +46,21 @@ public class SightingServiceDefault implements SightingService {
     }
     
     @Override
+    public Sighting addSighting(SightingCommandModel sigCM)
+	    throws InvalidObjectException {
+	Sighting sig = convertFromCommand(sigCM);
+	return addSighting(sig);
+    }
+    
+    @Override
     public void removeSighting(Sighting sig) {
 	sigDao.removeSighting(sig);
+    }
+    
+    @Override
+    public void removeSighting(SightingCommandModel sigCM) {
+	Sighting sig = convertFromCommand(sigCM);
+	removeSighting(sig);
     }
     
     @Override
@@ -66,5 +88,34 @@ public class SightingServiceDefault implements SightingService {
 	    return false;
 	}
 	return true;
+    }
+    
+    private boolean exists(Sighting sig) {
+	Sighting result = getSightingById(sig.getId());
+	return (result != null);
+    }
+    
+    private Sighting convertFromCommand(SightingCommandModel sigCM) {
+	Sighting sig = new Sighting();
+	// TODO:
+	// Finish this class once model changes are done
+	
+	return sig;
+    }
+    
+    private SightingCommandModel convertToCommand(Sighting sig) {
+	SightingCommandModel sigCM = new SightingCommandModel();
+	
+	int id = sig.getId();
+	if (id != 0) {
+	    sigCM.setId(id);
+	}
+	
+	sigCM.setTimestamp(sig.getTimestamp());
+	sigCM.setLocationId(sig.getLocation().getId());
+	// TODO:
+	// Finish this class once model changes are done
+	
+	return sigCM;
     }
 }

@@ -10,12 +10,16 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
 import com.sg.superperson2.model.Location;
 import com.sg.superperson2.model.Sighting;
+import com.sg.superperson2.model.SightingSuperperson;
+import com.sg.superperson2.model.Superperson;
 import com.sg.superperson2.model.User;
 
 /**
@@ -57,61 +61,113 @@ public class SightingDaoJdbc implements SightingDao {
 	this.jdbcTemplate = jdbcTemplate;
     }
     
+    @Inject
+    SightingSuperpersonDao sigSupDao;
+    
+    @Inject
+    SuperpersonDao supDao;
+    
     @Override
-    public Sighting addSighting(Sighting sighting) {
-	Timestamp timestamp = Timestamp.valueOf(sighting.getTimestamp());
+    public Sighting addSighting(Sighting sig) {
+	Timestamp timestamp = Timestamp.valueOf(sig.getTimestamp());
 	
 	jdbcTemplate.update(SQL_INSERT_SIGHTING,
-		sighting.getLocation().getId(),
+		sig.getLocation().getId(),
 		timestamp,
-		sighting.getUser().getId());
+		sig.getUser().getId());
 	
 	int id = jdbcTemplate.queryForObject("select last_insert_id()",
 		Integer.class);
-	sighting.setId(id);
+	sig.setId(id);
 	
-	return sighting;
+	// Superperson bridges
+	List<Superperson> sups = sig.getSuperpersons();
+	for (Superperson sup : sups) {
+	    SightingSuperperson sigSup = new SightingSuperperson();
+	    sigSup.setSighting(sig);
+	    sigSup.setSuperperson(sup);
+	    
+	    sigSupDao.addSightingSuperperson(sigSup);
+	}
+	
+	appendData(sig);
+	return sig;
     }
     
     @Override
-    public void removeSighting(Sighting sighting) {
+    public void removeSighting(Sighting sig) {
 	jdbcTemplate.update(SQL_DELETE_SIGHTING,
-		sighting.getId());
+		sig.getId());
     }
     
     @Override
-    public void updateSighting(Sighting sighting) {
-	Timestamp timestamp = Timestamp.valueOf(sighting.getTimestamp());
+    public void updateSighting(Sighting sig) {
+	Timestamp timestamp = Timestamp.valueOf(sig.getTimestamp());
 	
 	jdbcTemplate.update(SQL_UPDATE_SIGHTING,
-		sighting.getLocation().getId(),
+		sig.getLocation().getId(),
 		timestamp,
-		sighting.getUser().getId(),
-		sighting.getId());
+		sig.getUser().getId(),
+		sig.getId());
+	
+	// Rebuild bridges
+	List<SightingSuperperson> sigSups = sigSupDao
+		.getSightingSuperpersonsBySighting(sig);
+	for (SightingSuperperson sigSup : sigSups) {
+	    sigSupDao.removeSightingSuperperson(sigSup);
+	}
+	
+	List<Superperson> sups = sig.getSuperpersons();
+	for (Superperson sup : sups) {
+	    SightingSuperperson sigSup = new SightingSuperperson();
+	    sigSup.setSighting(sig);
+	    sigSup.setSuperperson(sup);
+	    
+	    sigSupDao.addSightingSuperperson(sigSup);
+	}
     }
     
     @Override
     public List<Sighting> getAllSightings() {
-	return jdbcTemplate.query(SQL_SELECT_ALL_SIGHTINGS,
+	List<Sighting> sigs = jdbcTemplate.query(SQL_SELECT_ALL_SIGHTINGS,
 		new SightingMapper());
+	for (Sighting sig : sigs) {
+	    appendData(sig);
+	}
+	return sigs;
     }
     
     @Override
     public List<Sighting> getAllSightingsSortByDate() {
-	return jdbcTemplate.query(SQL_SELECT_ALL_SIGHTINGS,
+	List<Sighting> sigs = jdbcTemplate.query(SQL_SELECT_ALL_SIGHTINGS,
 		new SightingMapper());
+	for (Sighting sig : sigs) {
+	    appendData(sig);
+	}
+	return sigs;
     }
     
     @Override
     public Sighting getSightingById(int id) {
 	try {
-	    return jdbcTemplate.queryForObject(SQL_SELECT_SIGHTING_BY_ID,
+	    Sighting sig = jdbcTemplate.queryForObject(SQL_SELECT_SIGHTING_BY_ID,
 		    new SightingMapper(),
 		    id);
+	    appendData(sig);
+	    return sig;
 	}
 	catch (EmptyResultDataAccessException ex) {
 	    return null;
 	}
+    }
+    
+    private Sighting appendData(Sighting sig) {
+	
+	// Get sighting's superpeople
+	List<Superperson> sups = supDao.getSuperpersonsBySighting(sig);
+	sig.setSuperpersons(sups);
+	
+	return sig;
     }
     
     private static final class SightingMapper

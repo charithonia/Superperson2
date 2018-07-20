@@ -110,4 +110,26 @@ public class SightingSuperpersonDaoTest {
 	
 	assertTrue(resultList.size() == N_SIGHTING_SUPERPERSONS);
     }
+    
+    @Test
+    @Transactional
+    public void testRemoveBridgesBySighting() {
+	
+	// Sighting 2 should have 2 bridges; try deleting them
+	Sighting sig = new Sighting();
+	sig.setId(2);
+	
+	List<SightingSuperperson> results = sigSupDao
+		.getSightingSuperpersonsBySighting(sig);
+	
+	assertTrue(results.size() == 2);
+	
+	for (SightingSuperperson sigSup : results) {
+	    sigSupDao.removeSightingSuperperson(sigSup);
+	}
+	
+	results = sigSupDao.getSightingSuperpersonsBySighting(sig);
+	
+	assertTrue(results.isEmpty());
+    }
 }

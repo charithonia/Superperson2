@@ -7,6 +7,7 @@ package com.sg.superperson2.dao;
 
 import java.util.List;
 
+import com.sg.superperson2.model.Superperson;
 import com.sg.superperson2.model.SuperpersonPower;
 
 /**
@@ -22,4 +23,7 @@ public interface SuperpersonPowerDao {
     public List<SuperpersonPower> getAllSuperpersonPowers();
     
     public SuperpersonPower getSuperpersonPowerById(int id);
+    
+    public List<SuperpersonPower> getSuperpersonPowersBySuperperson(
+	    Superperson superperson);
 }

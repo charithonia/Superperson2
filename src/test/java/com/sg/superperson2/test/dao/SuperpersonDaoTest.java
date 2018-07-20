@@ -10,8 +10,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertNotNull;
@@ -26,7 +24,6 @@ import com.sg.superperson2.dao.SightingDao;
 import com.sg.superperson2.dao.SuperpersonDao;
 import com.sg.superperson2.model.Sighting;
 import com.sg.superperson2.model.Superperson;
-import java.time.Month;
 
 /**
  *
@@ -44,7 +41,7 @@ public class SuperpersonDaoTest {
     SuperpersonDao superpersonDao;
     
     // db contents
-    private final int N_SUPERPERSONS = 2;
+    private final int N_SUPERPERSONS = 3;
     
     @Test
     @Transactional
@@ -87,27 +84,23 @@ public class SuperpersonDaoTest {
     
     @Test
     @Transactional
-    public void testGetSuperpersonsBySighting() {
+    public void testSightingHasSuperpersons() {
+	
 	Sighting sig = sightingDao.getSightingById(2);
 	
 	// This sighting involves the following superpeople:
 	// Captain Freeworld (id 1)
 	// Teleporto (id 2)
 	
-	List<Superperson> resultList = superpersonDao.
-		getSuperpersonsBySighting(sig);
-	
-	Superperson captain = superpersonDao.getSuperpersonById(1);
-	Superperson teleporto = superpersonDao.getSuperpersonById(2);
-	
+	List<Superperson> resultList = sig.getSuperpersons();
 	boolean hasCaptain = false;
 	boolean hasTeleporto = false;
-	
-	for (Superperson sup : resultList) {
-	    if (sup.equals(captain)) {
+	for (Superperson currentSup : resultList) {
+	    int id = currentSup.getId();
+	    if (id == 1) {
 		hasCaptain = true;
 	    }
-	    if (sup.equals(teleporto)) {
+	    if (id == 2) {
 		hasTeleporto = true;
 	    }
 	}

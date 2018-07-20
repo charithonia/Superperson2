@@ -9,6 +9,7 @@ import java.util.List;
 
 import com.sg.superperson2.exception.*;
 import com.sg.superperson2.model.Sighting;
+import com.sg.superperson2.model.SightingCommandModel;
 
 /**
  *
@@ -19,7 +20,12 @@ public interface SightingService {
     public Sighting addSighting(Sighting sighting)
 	    throws InvalidObjectException;
     
+    public Sighting addSighting(SightingCommandModel sightingCM)
+	    throws InvalidObjectException;
+    
     public void removeSighting(Sighting sighting);
+    
+    public void removeSighting(SightingCommandModel sightingCM);
     
     public void updateSighting(Sighting sighting)
 	    throws InvalidObjectException;
