@@ -80,7 +80,13 @@ public class SuperpersonDaoJdbc implements SuperpersonDao {
     
     @Override
     public Superperson addSuperperson(Superperson sup) {
-	Date dob = Date.valueOf(sup.getDateOfBirth());
+	Date dob;
+	if (sup.getDateOfBirth() != null) {
+	    dob = Date.valueOf(sup.getDateOfBirth());
+	}
+	else {
+	    dob = null;
+	}
 	
 	jdbcTemplate.update(SQL_INSERT_SUPERPERSON,
 		sup.getName(),

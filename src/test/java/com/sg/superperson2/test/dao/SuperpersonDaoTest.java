@@ -6,6 +6,7 @@
 package com.sg.superperson2.test.dao;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -22,8 +23,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.sg.superperson2.dao.SightingDao;
 import com.sg.superperson2.dao.SuperpersonDao;
+import com.sg.superperson2.dao.SuperpersonOrganizationDao;
+import com.sg.superperson2.dao.SuperpersonPowerDao;
+import com.sg.superperson2.model.Organization;
+import com.sg.superperson2.model.Power;
 import com.sg.superperson2.model.Sighting;
 import com.sg.superperson2.model.Superperson;
+import com.sg.superperson2.model.SuperpersonOrganization;
+import com.sg.superperson2.model.SuperpersonPower;
 
 /**
  *
@@ -35,10 +42,16 @@ import com.sg.superperson2.model.Superperson;
 public class SuperpersonDaoTest {
     
     @Inject
-    SightingDao sightingDao;
+    SightingDao sigDao;
     
     @Inject
-    SuperpersonDao superpersonDao;
+    SuperpersonDao supDao;
+    
+    @Inject
+    SuperpersonOrganizationDao supOrgDao;
+    
+    @Inject
+    SuperpersonPowerDao supPowDao;
     
     // db contents
     private final int N_SUPERPERSONS = 3;
@@ -57,15 +70,15 @@ public class SuperpersonDaoTest {
 	sup1.setDescription("The batman.");
 	
 	// add
-	superpersonDao.addSuperperson(sup1);
+	supDao.addSuperperson(sup1);
 	
 	Superperson result;
 	List<Superperson> resultList;
 	
 	// get
-	resultList = superpersonDao.getAllSuperpersons();
+	resultList = supDao.getAllSuperpersons();
 	
-	result = superpersonDao.getSuperpersonById(sup1.getId());
+	result = supDao.getSuperpersonById(sup1.getId());
 	
 	assertNotNull(result);
 	assertEquals(sup1.getName(), "Batman");
@@ -76,8 +89,8 @@ public class SuperpersonDaoTest {
 	assertTrue(resultList.size() == N_SUPERPERSONS + 1);
 	
 	// remove
-	superpersonDao.removeSuperperson(sup1);
-	resultList = superpersonDao.getAllSuperpersons();
+	supDao.removeSuperperson(sup1);
+	resultList = supDao.getAllSuperpersons();
 	
 	assertTrue(resultList.size() == N_SUPERPERSONS);
     }
@@ -86,7 +99,7 @@ public class SuperpersonDaoTest {
     @Transactional
     public void testSightingHasSuperpersons() {
 	
-	Sighting sig = sightingDao.getSightingById(2);
+	Sighting sig = sigDao.getSightingById(2);
 	
 	// This sighting involves the following superpeople:
 	// Captain Freeworld (id 1)
@@ -107,5 +120,74 @@ public class SuperpersonDaoTest {
 	
 	assertTrue(hasCaptain);
 	assertTrue(hasTeleporto);
+    }
+    
+    @Test
+    @Transactional
+    public void testSuperpersonBridges() {
+	Superperson sup = new Superperson();
+	sup.setName("Test");
+	
+	Organization org1 = new Organization();
+	org1.setId(1);
+	
+	Organization org2 = new Organization();
+	org2.setId(2);
+	
+	List<Organization> orgs = new ArrayList<>();
+	orgs.add(org1);
+	orgs.add(org2);
+	
+	Power pow1 = new Power();
+	pow1.setId(1);
+	
+	Power pow2 = new Power();
+	pow2.setId(2);
+	
+	List<Power> pows = new ArrayList<>();
+	pows.add(pow1);
+	pows.add(pow2);
+	
+	sup.setOrganizations(orgs);
+	sup.setPowers(pows);
+	
+	supDao.addSuperperson(sup);
+	
+	// Ensure that this superperson has correct bridges
+	List<SuperpersonPower> supPowResults = supPowDao
+		.getSuperpersonPowersBySuperperson(sup);
+	
+	boolean hasPow1 = false;
+	boolean hasPow2 = false;
+	for (SuperpersonPower currentSupPow : supPowResults) {
+	    int id = currentSupPow.getPower().getId();
+	    if (id == 1) {
+		hasPow1 = true;
+	    }
+	    else if (id == 2) {
+		hasPow2 = true;
+	    }
+	}
+	
+	assertTrue(hasPow1);
+	assertTrue(hasPow2);
+	
+	List<SuperpersonOrganization> supOrgResults = supOrgDao
+		.getSuperpersonOrganizationsBySuperperson(sup);
+	
+	boolean hasOrg1 = false;
+	boolean hasOrg2 = false;
+	for (SuperpersonOrganization currentSupOrg : supOrgResults) {
+	    int id = currentSupOrg.getOrganization().getId();
+	    if (id == 1) {
+		hasOrg1 = true;
+	    }
+	    else if (id == 2) {
+		hasOrg2 = true;
+	    }
+	}
+	
+	assertTrue(hasOrg1);
+	assertTrue(hasOrg2);
     }
 }
