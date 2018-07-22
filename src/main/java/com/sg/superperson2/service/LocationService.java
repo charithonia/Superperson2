@@ -24,10 +24,10 @@ public interface LocationService {
 	    throws InvalidObjectException, DuplicateObjectException;
     
     public void removeLocation(Location location)
-	    throws NotFoundException;
+	    throws NotFoundException, DeleteLinkedObjectException;
     
     public void removeLocation(LocationCommandModel locCM)
-	    throws NotFoundException;
+	    throws NotFoundException, DeleteLinkedObjectException;
     
     public void updateLocation(Location location)
 	    throws InvalidObjectException;

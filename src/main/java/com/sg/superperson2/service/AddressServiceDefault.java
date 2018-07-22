@@ -14,6 +14,7 @@ import com.sg.superperson2.dao.AddressDao;
 import com.sg.superperson2.exception.*;
 import com.sg.superperson2.model.Address;
 import com.sg.superperson2.model.AddressCommandModel;
+import com.sg.superperson2.model.Location;
 
 /**
  *
@@ -22,7 +23,10 @@ import com.sg.superperson2.model.AddressCommandModel;
 public class AddressServiceDefault implements AddressService {
     
     @Inject
-    AddressDao addressDao;
+    AddressDao adrDao;
+    
+    @Inject
+    LocationService locService;
     
     @Override
     public Address addAddress(Address address)
@@ -37,7 +41,7 @@ public class AddressServiceDefault implements AddressService {
 	    return getOriginal(address);
 	}
 	
-	return addressDao.addAddress(address);
+	return adrDao.addAddress(address);
     }
     
     @Override
@@ -49,16 +53,19 @@ public class AddressServiceDefault implements AddressService {
     
     @Override
     public void removeAddress(Address address)
-	    throws NotFoundException {
+	    throws NotFoundException, DeleteLinkedObjectException {
 	if (!exists(address)) {
 	    throw new NotFoundException("Address not found.");
 	}
-	addressDao.removeAddress(address);
+	if (isLinked(address)) {
+	    throw new DeleteLinkedObjectException("Address in use.");
+	}
+	adrDao.removeAddress(address);
     }
     
     @Override
     public void removeAddress(AddressCommandModel adrCM)
-	    throws NotFoundException {
+	    throws NotFoundException, DeleteLinkedObjectException {
 	Address address = convertFromCommand(adrCM);
 	removeAddress(address);
     }
@@ -70,7 +77,7 @@ public class AddressServiceDefault implements AddressService {
 	    throw new InvalidObjectException();
 	}
 	
-	addressDao.updateAddress(address);
+	adrDao.updateAddress(address);
     }
     
     @Override
@@ -82,12 +89,12 @@ public class AddressServiceDefault implements AddressService {
     
     @Override
     public List<Address> getAllAddresses() {
-	return addressDao.getAllAddresses();
+	return adrDao.getAllAddresses();
     }
     
     @Override
     public Address getAddressById(int id) {
-	return addressDao.getAddressById(id);
+	return adrDao.getAddressById(id);
     }
     
     private void validate(Address address)
@@ -158,6 +165,19 @@ public class AddressServiceDefault implements AddressService {
     private boolean exists(Address address) {
 	Address result = getAddressById(address.getId());
 	return !(result == null);
+    }
+    
+    private boolean isLinked(Address address) {
+	boolean isLinked = false;
+	List<Location> locs = locService.getAllLocations();
+	int adrId = address.getId();
+	for (Location loc : locs) {
+	    int locId = loc.getId();
+	    if (adrId == locId) {
+		isLinked = true;
+	    }
+	}
+	return isLinked;
     }
     
     private AddressCommandModel convertToCommand(Address address) {

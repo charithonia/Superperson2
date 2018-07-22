@@ -55,7 +55,7 @@ public class LocationServiceDefault implements LocationService {
     
     @Override
     public void removeLocation(Location location)
-	    throws NotFoundException {
+	    throws NotFoundException, DeleteLinkedObjectException {
 	if (!exists(location)) {
 	    throw new NotFoundException("Location not found.");
 	}
@@ -64,7 +64,7 @@ public class LocationServiceDefault implements LocationService {
     
     @Override
     public void removeLocation(LocationCommandModel locCM)
-	    throws NotFoundException {
+	    throws NotFoundException, DeleteLinkedObjectException {
 	Location loc = convertFromCommand(locCM);
 	removeLocation(loc);
     }
@@ -155,6 +155,14 @@ public class LocationServiceDefault implements LocationService {
     private boolean exists(Location loc) {
 	Location result = getLocationById(loc.getId());
 	return !(result == null);
+    }
+    
+    private boolean isLinked(Location loc) {
+	
+	// TODO: finish when there's time
+	boolean isLinked = false;
+	
+	return isLinked;
     }
     
     private LocationCommandModel convertToCommand(Location loc) {

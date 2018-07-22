@@ -24,10 +24,10 @@ public interface AddressService {
 	    throws InvalidObjectException;
     
     public void removeAddress(Address address)
-	    throws NotFoundException;
+	    throws NotFoundException, DeleteLinkedObjectException;
     
     public void removeAddress(AddressCommandModel adrCM)
-	    throws NotFoundException;
+	    throws NotFoundException, DeleteLinkedObjectException;
     
     public void updateAddress(Address address)
 	    throws InvalidObjectException;
