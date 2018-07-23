@@ -8,6 +8,7 @@ package com.sg.superperson2.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -63,9 +64,6 @@ public class SightingDaoJdbc implements SightingDao {
     
     @Inject
     SightingSuperpersonDao sigSupDao;
-    
-    @Inject
-    SuperpersonDao supDao;
     
     @Override
     public Sighting addSighting(Sighting sig) {
@@ -161,10 +159,23 @@ public class SightingDaoJdbc implements SightingDao {
 	}
     }
     
+    /**
+     * This method completes a Sighting object by referencing bridge tables.
+     * @param sig The Sighting requiring data
+     * @return The completed Sighting object
+     */
     private Sighting appendData(Sighting sig) {
 	
-	// Get sighting's superpeople
-	List<Superperson> sups = supDao.getSuperpersonsBySighting(sig);
+	// Load superperson ids
+	List<SightingSuperperson> sigSups = sigSupDao
+		.getSightingSuperpersonsBySighting(sig);
+	List<Superperson> sups = new ArrayList<>();
+	for (SightingSuperperson sigSup : sigSups) {
+	    Superperson sup = new Superperson();
+	    sup.setId(sigSup.getSuperperson().getId());
+	    
+	    sups.add(sup);
+	}
 	sig.setSuperpersons(sups);
 	
 	return sig;

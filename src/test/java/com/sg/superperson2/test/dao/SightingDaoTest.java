@@ -181,9 +181,6 @@ public class SightingDaoTest {
 	
 	// Ensure sighting is linked to superpersons id 1 and 2
 	supResults = supDao.getSuperpersonsBySighting(sig);
-	for (Superperson sup : supResults) {
-	    System.err.println(sup.getId());
-	}
 	hasSup1 = false;
 	hasSup2 = false;
 	for (Superperson currentSup : supResults) {
@@ -205,9 +202,6 @@ public class SightingDaoTest {
 	
 	// Ensure sighting is linked to superpersons id 2 and 3 only
 	supResults = supDao.getSuperpersonsBySighting(sig);
-	for (Superperson sup : supResults) {
-	    System.err.println(sup.getId());
-	}
 	hasSup1 = false;
 	hasSup2 = false;
 	hasSup3 = false;

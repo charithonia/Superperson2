@@ -37,11 +37,11 @@ public class SuperpersonOrganizationDaoJdbc
     private final String SQL_SELECT_ALL_SUPERPERSON_ORGANIZATIONS =
 	    "select * from superperson_organization";
     
-    private final String SQL_SELECT_SUPERPERSON_ORGANIZATIONS_BY_SUPERPERSON =
-	    "select * from superperson_organization where superperson_id = ?";
-    
     private final String SQL_SELECT_SUPERPERSON_ORGANIZATION =
 	    "select * from superperson_organization where id = ?";
+    
+    private final String SQL_SELECT_SUPERPERSON_ORGANIZATIONS_BY_SUPERPERSON =
+	    "select * from superperson_organization where superperson_id = ?";
     
     // jdbc
     private JdbcTemplate jdbcTemplate;

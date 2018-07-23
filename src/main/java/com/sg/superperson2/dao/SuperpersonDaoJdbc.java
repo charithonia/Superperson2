@@ -8,6 +8,7 @@ package com.sg.superperson2.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -203,15 +204,35 @@ public class SuperpersonDaoJdbc implements SuperpersonDao {
 		sighting.getId());
     }
     
+    /**
+     * This method completes a Superperson object by referencing bridge tables.
+     * @param sup The Superperson to be completed
+     * @return The completed Superperson
+     */
     private Superperson appendData(Superperson sup) {
 	
-	// Get superperson's organizations
-	List<Organization> orgs = orgDao.getOrganizationsBySuperperson(sup);
+	// Load organization ids
+	List<SuperpersonOrganization> supOrgs = supOrgDao
+		.getSuperpersonOrganizationsBySuperperson(sup);
+	List<Organization> orgs = new ArrayList<>();
+	for (SuperpersonOrganization supOrg : supOrgs) {
+	    Organization org = new Organization();
+	    org.setId(supOrg.getOrganization().getId());
+	    
+	    orgs.add(org);
+	}
 	sup.setOrganizations(orgs);
+	
+	// Load power ids
+	List<SuperpersonPower> supPows = supPowDao
+		.getSuperpersonPowersBySuperperson(sup);
+	List<Power> pows = new ArrayList<>();
+	for (SuperpersonPower supPow : supPows) {
+	    Power pow = new Power();
+	    pow.setId(supPow.getPower().getId());
 	    
-	    
-	// Get superperson's powers
-	List<Power> pows = powDao.getPowersBySuperperson(sup);
+	    pows.add(pow);
+	}
 	sup.setPowers(pows);
 	
 	return sup;

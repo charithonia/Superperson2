@@ -39,7 +39,7 @@ public class SightingSuperpersonDaoJdbc implements SightingSuperpersonDao {
     private final String SQL_SELECT_SIGHTING_SUPERPERSON_BY_ID =
 	    "select * from sighting_superperson where id = ?";
     
-    private final String SQL_SELECT_SIGHTING_SUPERPERSON_BY_SUPERPERSON =
+    private final String SQL_SELECT_SIGHTING_SUPERPERSON_BY_SIGHTING =
 	    "select * from sighting_superperson where sighting_id = ?";
     
     // jdbc
@@ -91,7 +91,7 @@ public class SightingSuperpersonDaoJdbc implements SightingSuperpersonDao {
     @Override
     public List<SightingSuperperson> getSightingSuperpersonsBySighting(
 	    Sighting sig) {
-	return jdbcTemplate.query(SQL_SELECT_SIGHTING_SUPERPERSON_BY_SUPERPERSON,
+	return jdbcTemplate.query(SQL_SELECT_SIGHTING_SUPERPERSON_BY_SIGHTING,
 		new SightingSuperpersonMapper(),
 		sig.getId());
     }

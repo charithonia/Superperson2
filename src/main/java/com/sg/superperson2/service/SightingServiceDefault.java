@@ -53,12 +53,17 @@ public class SightingServiceDefault implements SightingService {
     }
     
     @Override
-    public void removeSighting(Sighting sig) {
+    public void removeSighting(Sighting sig)
+	    throws NotFoundException {
+	if (!exists(sig)) {
+	    throw new NotFoundException("Sighting not found.");
+	}
 	sigDao.removeSighting(sig);
     }
     
     @Override
-    public void removeSighting(SightingCommandModel sigCM) {
+    public void removeSighting(SightingCommandModel sigCM)
+	    throws NotFoundException {
 	Sighting sig = convertFromCommand(sigCM);
 	removeSighting(sig);
     }
@@ -83,6 +88,26 @@ public class SightingServiceDefault implements SightingService {
 	return sigDao.getSightingById(id);
     }
     
+    @Override
+    public List<SightingCommandModel> getAllSightingCommands() {
+	List<SightingCommandModel> sigCMs = new ArrayList<>();
+	List<Sighting> sigs = getAllSightings();
+	for (Sighting sig : sigs) {
+	    SightingCommandModel sigCM = convertToCommand(sig);
+	    sigCMs.add(sigCM);
+	}
+	
+	return sigCMs;
+    }
+    
+    @Override
+    public SightingCommandModel getSightingCommandById(int id) {
+	Sighting sig = getSightingById(id);
+	SightingCommandModel sigCM = convertToCommand(sig);
+	
+	return sigCM;
+    }
+    
     private boolean isValid(Sighting sig) {
 	if (sig.getUser() == null) {
 	    return false;
@@ -97,8 +122,7 @@ public class SightingServiceDefault implements SightingService {
     
     private Sighting convertFromCommand(SightingCommandModel sigCM) {
 	Sighting sig = new Sighting();
-	// TODO:
-	// Finish this class once model changes are done
+	
 	
 	return sig;
     }
@@ -118,4 +142,6 @@ public class SightingServiceDefault implements SightingService {
 	
 	return sigCM;
     }
+    
+    
 }

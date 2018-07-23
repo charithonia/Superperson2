@@ -1,4 +1,4 @@
-package com.sg.superperson2;
+package com.sg.superperson2.controller;
 
 import java.util.Map;
 import org.springframework.stereotype.Controller;

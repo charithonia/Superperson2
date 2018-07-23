@@ -23,9 +23,11 @@ public interface SightingService {
     public Sighting addSighting(SightingCommandModel sightingCM)
 	    throws InvalidObjectException;
     
-    public void removeSighting(Sighting sighting);
+    public void removeSighting(Sighting sighting)
+	    throws NotFoundException;
     
-    public void removeSighting(SightingCommandModel sightingCM);
+    public void removeSighting(SightingCommandModel sightingCM)
+	    throws NotFoundException;
     
     public void updateSighting(Sighting sighting)
 	    throws InvalidObjectException;
@@ -33,4 +35,8 @@ public interface SightingService {
     public List<Sighting> getAllSightings();
     
     public Sighting getSightingById(int id);
+    
+    public List<SightingCommandModel> getAllSightingCommands();
+    
+    public SightingCommandModel getSightingCommandById(int id);
 }

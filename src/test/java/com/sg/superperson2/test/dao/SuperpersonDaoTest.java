@@ -118,6 +118,8 @@ public class SuperpersonDaoTest {
 	    }
 	}
 	
+	
+	
 	assertTrue(hasCaptain);
 	assertTrue(hasTeleporto);
     }

@@ -159,7 +159,7 @@ public class LocationServiceDefault implements LocationService {
     
     private boolean isLinked(Location loc) {
 	
-	// TODO: finish when there's time
+	// TODO: finish when there's time, for other classes too
 	boolean isLinked = false;
 	
 	return isLinked;
