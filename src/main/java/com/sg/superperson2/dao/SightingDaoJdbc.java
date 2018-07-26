@@ -46,11 +46,11 @@ public class SightingDaoJdbc implements SightingDao {
 	    + "where id = ?";
     
     private final String SQL_SELECT_ALL_SIGHTINGS =
-	    "select * from sighting";
+	    "select * from sighting order by timestamp";
     
-    private final String SQL_SELECT_ALL_SIGHTINGS_ORDER_BY_DATE =
-	    "select * from sighting "
-	    + "order by timestamp";
+    private final String SQL_SELECT_ALL_SIGHTINGS_LIMIT_OFFSET =
+	    "select * from sighting order by timestamp "
+	    + "limit ? offset ?";
     
     private final String SQL_SELECT_SIGHTING_BY_ID =
 	    "select * from sighting where id = ?";
@@ -129,19 +129,25 @@ public class SightingDaoJdbc implements SightingDao {
     public List<Sighting> getAllSightings() {
 	List<Sighting> sigs = jdbcTemplate.query(SQL_SELECT_ALL_SIGHTINGS,
 		new SightingMapper());
+	
 	for (Sighting sig : sigs) {
 	    appendData(sig);
 	}
+	
 	return sigs;
     }
     
     @Override
-    public List<Sighting> getAllSightingsSortByDate() {
-	List<Sighting> sigs = jdbcTemplate.query(SQL_SELECT_ALL_SIGHTINGS,
-		new SightingMapper());
+    public List<Sighting> getSightings(int limit) {
+	List<Sighting> sigs = jdbcTemplate.query(
+		SQL_SELECT_ALL_SIGHTINGS_LIMIT_OFFSET,
+		new SightingMapper(),
+		limit, 0);
+	
 	for (Sighting sig : sigs) {
 	    appendData(sig);
 	}
+	
 	return sigs;
     }
     
@@ -152,6 +158,7 @@ public class SightingDaoJdbc implements SightingDao {
 		    new SightingMapper(),
 		    id);
 	    appendData(sig);
+	    
 	    return sig;
 	}
 	catch (EmptyResultDataAccessException ex) {

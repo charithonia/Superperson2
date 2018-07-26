@@ -90,20 +90,14 @@ public class SightingServiceDefault implements SightingService {
     }
     
     @Override
-    public Sighting getSightingById(int id) {
-	return sigDao.getSightingById(id);
+    public List<Sighting> getSightings(int limit) {
+	List<Sighting> sigs = sigDao.getSightings(limit);
+	return sigs;
     }
     
     @Override
-    public List<SightingCommand> getAllSightingCommands() {
-	List<SightingCommand> sigComs = new ArrayList<>();
-	List<Sighting> sigs = getAllSightings();
-	for (Sighting sig : sigs) {
-	    SightingCommand sigCom = convertToCommand(sig);
-	    sigComs.add(sigCom);
-	}
-	
-	return sigComs;
+    public Sighting getSightingById(int id) {
+	return sigDao.getSightingById(id);
     }
     
     @Override
@@ -116,12 +110,16 @@ public class SightingServiceDefault implements SightingService {
     
     @Override
     public List<SightingView> getAllSightingViews() {
-	List<Sighting> allSigs = getAllSightings();
-	List<SightingView> sigViews = new ArrayList<>();
-	for (Sighting currentSig : allSigs) {
-	    SightingView sigView = convertToView(currentSig);
-	    sigViews.add(sigView);
-	}
+	List<Sighting> sigs = getAllSightings();
+	List<SightingView> sigViews = convertToView(sigs);
+	
+	return sigViews;
+    }
+    
+    @Override
+    public List<SightingView> getSightingViews(int limit) {
+	List<Sighting> sigs = getSightings(limit);
+	List<SightingView> sigViews = convertToView(sigs);
 	
 	return sigViews;
     }
@@ -191,8 +189,18 @@ public class SightingServiceDefault implements SightingService {
 	return sigCom;
     }
     
+    private List<SightingCommand> convertToCommand(List<Sighting> sigs) {
+	List<SightingCommand> sigComs = new ArrayList<>();
+	for (Sighting sig : sigs) {
+	    SightingCommand sigCom = convertToCommand(sig);
+	    sigComs.add(sigCom);
+	}
+	
+	return sigComs;
+    }
+    
     /**
-     * Create a Sighting model where all components are fully loaded.
+     * Create a Sighting model with some fully loaded components.
      * @param sig The Sighting to modify
      * @return The Sighting fully loaded
      */
@@ -221,5 +229,15 @@ public class SightingServiceDefault implements SightingService {
 	sigView.setUser(usr);
 	
 	return sigView;
+    }
+    
+    private List<SightingView> convertToView(List<Sighting> sigs) {
+	List<SightingView> sigViews = new ArrayList<>();
+	for (Sighting sig : sigs) {
+	    SightingView sigView = convertToView(sig);
+	    sigViews.add(sigView);
+	}
+	
+	return sigViews;
     }
 }

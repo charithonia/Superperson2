@@ -19,6 +19,7 @@
 		    </div>
 		    <ul class="nav navbar-nav">
 			<li role="presentation" class="active"><a href="${pageContext.request.contextPath}/">Home</a></li>
+			<li role="presentation"><a href="${pageContext.request.contextPath}/sightings">Sightings</a></li>
 		    </ul>
 		</div>
 	    </nav>

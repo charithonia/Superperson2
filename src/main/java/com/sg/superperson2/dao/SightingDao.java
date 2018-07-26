@@ -23,7 +23,7 @@ public interface SightingDao {
     
     public List<Sighting> getAllSightings();
     
-    public List<Sighting> getAllSightingsSortByDate();
+    public List<Sighting> getSightings(int limit);
         
     public Sighting getSightingById(int id);
 }

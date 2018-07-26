@@ -35,13 +35,15 @@ public interface SightingService {
     
     public List<Sighting> getAllSightings();
     
+    public List<Sighting> getSightings(int limit);
+    
     public Sighting getSightingById(int id);
-    
-    public List<SightingCommand> getAllSightingCommands();
-    
+        
     public SightingCommand getSightingCommandById(int id);
     
     public List<SightingView> getAllSightingViews();
     
+    public List<SightingView> getSightingViews(int limit);
+	
     public SightingView getSightingViewById(int id);
 }
