@@ -9,7 +9,7 @@ package com.sg.superperson2.model;
  *
  * @author main
  */
-public class LocationCommandModel {
+public class LocationCommand {
     private int id;
     private double latitude;
     private double longitude;

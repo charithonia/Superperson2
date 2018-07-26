@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author main
  */
-public class SuperpersonCommandModel {
+public class SuperpersonCommand {
     private int id;
     private String name;
     private String realName;

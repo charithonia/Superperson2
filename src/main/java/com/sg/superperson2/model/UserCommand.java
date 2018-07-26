@@ -9,7 +9,7 @@ package com.sg.superperson2.model;
  *
  * @author main
  */
-public class UserCommandModel {
+public class UserCommand {
     private int id;
     private String username;
     private String email;

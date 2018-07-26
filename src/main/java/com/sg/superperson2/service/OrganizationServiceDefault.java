@@ -13,7 +13,7 @@ import com.sg.superperson2.dao.OrganizationDao;
 import com.sg.superperson2.exception.*;
 import com.sg.superperson2.model.Location;
 import com.sg.superperson2.model.Organization;
-import com.sg.superperson2.model.OrganizationCommandModel;
+import com.sg.superperson2.model.OrganizationCommand;
 
 /**
  *
@@ -43,7 +43,7 @@ public class OrganizationServiceDefault implements OrganizationService {
     }
     
     @Override
-    public Organization addOrganization(OrganizationCommandModel orgCM)
+    public Organization addOrganization(OrganizationCommand orgCM)
 	    throws InvalidObjectException, DuplicateObjectException {
 	Organization org = convertFromCommand(orgCM);
 	return addOrganization(org);
@@ -59,7 +59,7 @@ public class OrganizationServiceDefault implements OrganizationService {
     }
     
     @Override
-    public void removeOrganization(OrganizationCommandModel orgCM)
+    public void removeOrganization(OrganizationCommand orgCM)
 	    throws NotFoundException {
 	Organization org = convertFromCommand(orgCM);
 	removeOrganization(org);
@@ -115,7 +115,7 @@ public class OrganizationServiceDefault implements OrganizationService {
 	return (result != null);
     }
     
-    private Organization convertFromCommand(OrganizationCommandModel orgCM) {
+    private Organization convertFromCommand(OrganizationCommand orgCM) {
 	Organization org = new Organization();
 	
 	int id = orgCM.getId();
@@ -130,8 +130,8 @@ public class OrganizationServiceDefault implements OrganizationService {
 	return org;
     }
     
-    private OrganizationCommandModel convertToCommand(Organization org) {
-	OrganizationCommandModel orgCM = new OrganizationCommandModel();
+    private OrganizationCommand convertToCommand(Organization org) {
+	OrganizationCommand orgCM = new OrganizationCommand();
 	orgCM.setId(org.getId());
 	orgCM.setName(org.getName());
 	orgCM.setHead(org.getHead());

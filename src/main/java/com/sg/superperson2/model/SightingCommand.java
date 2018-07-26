@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author main
  */
-public class SightingCommandModel {
+public class SightingCommand {
     private int id;
     private LocalDateTime timestamp;
     private int locationId;

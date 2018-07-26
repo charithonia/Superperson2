@@ -9,7 +9,7 @@ package com.sg.superperson2.model;
  *
  * @author main
  */
-public class AddressCommandModel {
+public class AddressCommand {
     private int id;
     private String number;
     private String street;

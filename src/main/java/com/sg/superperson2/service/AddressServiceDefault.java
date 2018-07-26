@@ -13,7 +13,7 @@ import javax.inject.Inject;
 import com.sg.superperson2.dao.AddressDao;
 import com.sg.superperson2.exception.*;
 import com.sg.superperson2.model.Address;
-import com.sg.superperson2.model.AddressCommandModel;
+import com.sg.superperson2.model.AddressCommand;
 import com.sg.superperson2.model.Location;
 
 /**
@@ -45,7 +45,7 @@ public class AddressServiceDefault implements AddressService {
     }
     
     @Override
-    public Address addAddress(AddressCommandModel adrCM)
+    public Address addAddress(AddressCommand adrCM)
 	    throws InvalidObjectException {
 	Address address = convertFromCommand(adrCM);
 	return addAddress(address);
@@ -64,7 +64,7 @@ public class AddressServiceDefault implements AddressService {
     }
     
     @Override
-    public void removeAddress(AddressCommandModel adrCM)
+    public void removeAddress(AddressCommand adrCM)
 	    throws NotFoundException, DeleteLinkedObjectException {
 	Address address = convertFromCommand(adrCM);
 	removeAddress(address);
@@ -81,7 +81,7 @@ public class AddressServiceDefault implements AddressService {
     }
     
     @Override
-    public void updateAddress(AddressCommandModel adrCM)
+    public void updateAddress(AddressCommand adrCM)
 	    throws InvalidObjectException {
 	Address address = convertFromCommand(adrCM);
 	updateAddress(address);
@@ -180,8 +180,8 @@ public class AddressServiceDefault implements AddressService {
 	return isLinked;
     }
     
-    private AddressCommandModel convertToCommand(Address address) {
-	AddressCommandModel adrCM = new AddressCommandModel();
+    private AddressCommand convertToCommand(Address address) {
+	AddressCommand adrCM = new AddressCommand();
 	adrCM.setId(address.getId());
 	adrCM.setNumber(address.getNumber());
 	adrCM.setStreet(address.getStreet());
@@ -192,7 +192,7 @@ public class AddressServiceDefault implements AddressService {
 	return adrCM;
     }
     
-    private Address convertFromCommand(AddressCommandModel adrCM) {
+    private Address convertFromCommand(AddressCommand adrCM) {
 	Address address = new Address();
 	
 	int id = adrCM.getId();

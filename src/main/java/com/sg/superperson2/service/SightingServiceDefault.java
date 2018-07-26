@@ -5,6 +5,7 @@
  */
 package com.sg.superperson2.service;
 
+import com.sg.superperson2.model.SightingView;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,8 +16,7 @@ import com.sg.superperson2.dao.SightingDao;
 import com.sg.superperson2.exception.*;
 import com.sg.superperson2.model.Location;
 import com.sg.superperson2.model.Sighting;
-import com.sg.superperson2.model.SightingCommandModel;
-import com.sg.superperson2.model.SightingSuperperson;
+import com.sg.superperson2.model.SightingCommand;
 import com.sg.superperson2.model.Superperson;
 import com.sg.superperson2.model.User;
 
@@ -30,7 +30,13 @@ public class SightingServiceDefault implements SightingService {
     SightingDao sigDao;
     
     @Inject
+    LocationService locService;
+    
+    @Inject
     SuperpersonService supService;
+    
+    @Inject
+    UserService usrService;
     
     @Override
     public Sighting addSighting(Sighting sig)
@@ -46,9 +52,9 @@ public class SightingServiceDefault implements SightingService {
     }
     
     @Override
-    public Sighting addSighting(SightingCommandModel sigCM)
+    public Sighting addSighting(SightingCommand sigCom)
 	    throws InvalidObjectException {
-	Sighting sig = convertFromCommand(sigCM);
+	Sighting sig = convertFromCommand(sigCom);
 	return addSighting(sig);
     }
     
@@ -62,9 +68,9 @@ public class SightingServiceDefault implements SightingService {
     }
     
     @Override
-    public void removeSighting(SightingCommandModel sigCM)
+    public void removeSighting(SightingCommand sigCom)
 	    throws NotFoundException {
-	Sighting sig = convertFromCommand(sigCM);
+	Sighting sig = convertFromCommand(sigCom);
 	removeSighting(sig);
     }
     
@@ -89,24 +95,45 @@ public class SightingServiceDefault implements SightingService {
     }
     
     @Override
-    public List<SightingCommandModel> getAllSightingCommands() {
-	List<SightingCommandModel> sigCMs = new ArrayList<>();
+    public List<SightingCommand> getAllSightingCommands() {
+	List<SightingCommand> sigComs = new ArrayList<>();
 	List<Sighting> sigs = getAllSightings();
 	for (Sighting sig : sigs) {
-	    SightingCommandModel sigCM = convertToCommand(sig);
-	    sigCMs.add(sigCM);
+	    SightingCommand sigCom = convertToCommand(sig);
+	    sigComs.add(sigCom);
 	}
 	
-	return sigCMs;
+	return sigComs;
     }
     
     @Override
-    public SightingCommandModel getSightingCommandById(int id) {
+    public SightingCommand getSightingCommandById(int id) {
 	Sighting sig = getSightingById(id);
-	SightingCommandModel sigCM = convertToCommand(sig);
+	SightingCommand sigCom = convertToCommand(sig);
 	
-	return sigCM;
+	return sigCom;
     }
+    
+    @Override
+    public List<SightingView> getAllSightingViews() {
+	List<Sighting> allSigs = getAllSightings();
+	List<SightingView> sigViews = new ArrayList<>();
+	for (Sighting currentSig : allSigs) {
+	    SightingView sigView = convertToView(currentSig);
+	    sigViews.add(sigView);
+	}
+	
+	return sigViews;
+    }
+    
+    @Override
+    public SightingView getSightingViewById(int id) {
+	Sighting sig = getSightingById(id);
+	SightingView sigView = convertToView(sig);
+	
+	return sigView;
+    }
+    
     
     private boolean isValid(Sighting sig) {
 	if (sig.getUser() == null) {
@@ -120,28 +147,79 @@ public class SightingServiceDefault implements SightingService {
 	return (result != null);
     }
     
-    private Sighting convertFromCommand(SightingCommandModel sigCM) {
+    private Sighting convertFromCommand(SightingCommand sigCom) {
 	Sighting sig = new Sighting();
 	
+	int id = sigCom.getId();
+	if (id != 0) {
+	    sig.setId(id);
+	}
+	
+	sig.setTimestamp(sigCom.getTimestamp());
+	
+	Location loc = new Location();
+	loc.setId(sigCom.getLocationId());
+	sig.setLocation(loc);
+	
+	List<Superperson> sups = new ArrayList<>();
+	for (Integer supId : sigCom.getSuperpersonIds()) {
+	    Superperson sup = new Superperson();
+	    sup.setId(supId);
+	}
+	sig.setSuperpersons(sups);
+	
+	User user = new User();
+	user.setId(sigCom.getUserId());
+	sig.setUser(user);
 	
 	return sig;
     }
     
-    private SightingCommandModel convertToCommand(Sighting sig) {
-	SightingCommandModel sigCM = new SightingCommandModel();
+    private SightingCommand convertToCommand(Sighting sig) {
+	SightingCommand sigCom = new SightingCommand();
 	
 	int id = sig.getId();
 	if (id != 0) {
-	    sigCM.setId(id);
+	    sigCom.setId(id);
 	}
 	
-	sigCM.setTimestamp(sig.getTimestamp());
-	sigCM.setLocationId(sig.getLocation().getId());
+	sigCom.setTimestamp(sig.getTimestamp());
+	sigCom.setLocationId(sig.getLocation().getId());
 	// TODO:
-	// Finish this class once model changes are done
+	// Finish?
 	
-	return sigCM;
+	return sigCom;
     }
     
-    
+    /**
+     * Create a Sighting model where all components are fully loaded.
+     * @param sig The Sighting to modify
+     * @return The Sighting fully loaded
+     */
+    private SightingView convertToView(Sighting sig) {
+	SightingView sigView = new SightingView();
+	sigView.setId(sig.getId());
+	sigView.setTimestamp(sig.getTimestamp());
+	
+	// Load location
+	int locId = sig.getLocation().getId();
+	Location loc = locService.getLocationById(locId);
+	sigView.setLocation(loc);
+	
+	// Load superpeople
+	List<Superperson> sups = new ArrayList<>();
+	for (Superperson currentSup : sig.getSuperpersons()) {
+	    int supId = currentSup.getId();
+	    Superperson sup = supService.getSuperpersonById(supId);
+	    sups.add(sup);
+	}
+	sigView.setSuperpersons(sups);
+	
+	// Load user
+	int usrId = sig.getUser().getId();
+	User usr = usrService.getUserById(usrId);
+	sigView.setUser(usr);
+	
+	return sigView;
+    }
 }

@@ -9,7 +9,7 @@ package com.sg.superperson2.model;
  *
  * @author main
  */
-public class OrganizationCommandModel {
+public class OrganizationCommand {
     private int id;
     private String name;
     private String head;

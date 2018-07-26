@@ -9,7 +9,7 @@ import java.util.List;
 
 import com.sg.superperson2.exception.*;
 import com.sg.superperson2.model.Organization;
-import com.sg.superperson2.model.OrganizationCommandModel;
+import com.sg.superperson2.model.OrganizationCommand;
 
 /**
  *
@@ -20,13 +20,13 @@ public interface OrganizationService {
     public Organization addOrganization(Organization org)
 	    throws InvalidObjectException, DuplicateObjectException;
     
-    public Organization addOrganization(OrganizationCommandModel orgCM)
+    public Organization addOrganization(OrganizationCommand orgCM)
 	    throws InvalidObjectException, DuplicateObjectException;
     
     public void removeOrganization(Organization org)
 	    throws NotFoundException;
     
-    public void removeOrganization(OrganizationCommandModel orgCM)
+    public void removeOrganization(OrganizationCommand orgCM)
 	    throws NotFoundException;
     
     public void updateOrganization(Organization org)

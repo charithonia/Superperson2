@@ -9,7 +9,8 @@ import java.util.List;
 
 import com.sg.superperson2.exception.*;
 import com.sg.superperson2.model.Sighting;
-import com.sg.superperson2.model.SightingCommandModel;
+import com.sg.superperson2.model.SightingCommand;
+import com.sg.superperson2.model.SightingView;
 
 /**
  *
@@ -20,13 +21,13 @@ public interface SightingService {
     public Sighting addSighting(Sighting sighting)
 	    throws InvalidObjectException;
     
-    public Sighting addSighting(SightingCommandModel sightingCM)
+    public Sighting addSighting(SightingCommand sightingCM)
 	    throws InvalidObjectException;
     
     public void removeSighting(Sighting sighting)
 	    throws NotFoundException;
     
-    public void removeSighting(SightingCommandModel sightingCM)
+    public void removeSighting(SightingCommand sightingCM)
 	    throws NotFoundException;
     
     public void updateSighting(Sighting sighting)
@@ -36,7 +37,11 @@ public interface SightingService {
     
     public Sighting getSightingById(int id);
     
-    public List<SightingCommandModel> getAllSightingCommands();
+    public List<SightingCommand> getAllSightingCommands();
     
-    public SightingCommandModel getSightingCommandById(int id);
+    public SightingCommand getSightingCommandById(int id);
+    
+    public List<SightingView> getAllSightingViews();
+    
+    public SightingView getSightingViewById(int id);
 }

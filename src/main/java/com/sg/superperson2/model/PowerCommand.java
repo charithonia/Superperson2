@@ -9,7 +9,7 @@ package com.sg.superperson2.model;
  *
  * @author main
  */
-public class PowerCommandModel {
+public class PowerCommand {
     private int id;
     private String name;
     private String description;

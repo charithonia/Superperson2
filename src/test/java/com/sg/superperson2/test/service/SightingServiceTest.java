@@ -5,9 +5,12 @@
  */
 package com.sg.superperson2.test.service;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.junit.Test;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import org.junit.runner.RunWith;
 
@@ -17,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.sg.superperson2.exception.*;
 import com.sg.superperson2.model.Sighting;
+import com.sg.superperson2.model.SightingView;
 import com.sg.superperson2.service.SightingService;
 
 /**
@@ -45,5 +49,15 @@ public class SightingServiceTest {
 	}
 	
 	assertTrue(thrown);
+    }
+    
+    @Test
+    @Transactional
+    public void testGetSightingViews() {
+	
+	// This shouldn't be empty. If it is, problems.
+	List<SightingView> sigViews = sigService.getAllSightingViews();
+	
+	assertFalse(sigViews.isEmpty());
     }
 }

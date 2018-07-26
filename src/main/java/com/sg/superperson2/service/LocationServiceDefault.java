@@ -13,7 +13,7 @@ import com.sg.superperson2.dao.LocationDao;
 import com.sg.superperson2.exception.*;
 import com.sg.superperson2.model.Address;
 import com.sg.superperson2.model.Location;
-import com.sg.superperson2.model.LocationCommandModel;
+import com.sg.superperson2.model.LocationCommand;
 
 /**
  *
@@ -47,7 +47,7 @@ public class LocationServiceDefault implements LocationService {
     }
     
     @Override
-    public Location addLocation(LocationCommandModel locCM)
+    public Location addLocation(LocationCommand locCM)
 	    throws InvalidObjectException, DuplicateObjectException {
 	Location loc = convertFromCommand(locCM);
 	return addLocation(loc);
@@ -63,7 +63,7 @@ public class LocationServiceDefault implements LocationService {
     }
     
     @Override
-    public void removeLocation(LocationCommandModel locCM)
+    public void removeLocation(LocationCommand locCM)
 	    throws NotFoundException, DeleteLinkedObjectException {
 	Location loc = convertFromCommand(locCM);
 	removeLocation(loc);
@@ -86,7 +86,7 @@ public class LocationServiceDefault implements LocationService {
     }
     
     @Override
-    public void updateLocation(LocationCommandModel locCM)
+    public void updateLocation(LocationCommand locCM)
 	    throws InvalidObjectException {
 	Location loc = convertFromCommand(locCM);
 	updateLocation(loc);
@@ -165,8 +165,8 @@ public class LocationServiceDefault implements LocationService {
 	return isLinked;
     }
     
-    private LocationCommandModel convertToCommand(Location loc) {
-	LocationCommandModel locCM = new LocationCommandModel();
+    private LocationCommand convertToCommand(Location loc) {
+	LocationCommand locCM = new LocationCommand();
 	locCM.setId(loc.getId());
 	locCM.setLatitude(loc.getLatitude());
 	locCM.setLongitude(loc.getLongitude());
@@ -175,7 +175,7 @@ public class LocationServiceDefault implements LocationService {
 	return locCM;
     }
     
-    private Location convertFromCommand(LocationCommandModel locCM) {
+    private Location convertFromCommand(LocationCommand locCM) {
 	Location loc = new Location();
 	
 	int id = locCM.getId();

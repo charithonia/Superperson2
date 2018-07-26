@@ -12,7 +12,7 @@ import javax.inject.Inject;
 import com.sg.superperson2.dao.PowerDao;
 import com.sg.superperson2.exception.*;
 import com.sg.superperson2.model.Power;
-import com.sg.superperson2.model.PowerCommandModel;
+import com.sg.superperson2.model.PowerCommand;
 
 /**
  *
@@ -37,7 +37,7 @@ public class PowerServiceDefault implements PowerService {
     }
     
     @Override
-    public Power addPower(PowerCommandModel powCM)
+    public Power addPower(PowerCommand powCM)
 	    throws InvalidObjectException, DuplicateObjectException {
 	Power pow = convertFromCommand(powCM);
 	return addPower(pow);
@@ -50,7 +50,7 @@ public class PowerServiceDefault implements PowerService {
     }
     
     @Override
-    public void removePower(PowerCommandModel powCM)
+    public void removePower(PowerCommand powCM)
 	    throws NotFoundException {
 	Power pow = convertFromCommand(powCM);
 	removePower(pow);
@@ -118,7 +118,7 @@ public class PowerServiceDefault implements PowerService {
 	return (result != null);
     }
     
-    private Power convertFromCommand(PowerCommandModel powCM) {
+    private Power convertFromCommand(PowerCommand powCM) {
 	Power pow = new Power();
 	
 	int id = powCM.getId();
@@ -132,8 +132,8 @@ public class PowerServiceDefault implements PowerService {
 	return pow;
     }
     
-    private PowerCommandModel convertToCommandModel(Power pow) {
-	PowerCommandModel powCM = new PowerCommandModel();
+    private PowerCommand convertToCommandModel(Power pow) {
+	PowerCommand powCM = new PowerCommand();
 	powCM.setId(pow.getId());
 	powCM.setName(pow.getName());
 	powCM.setDescription(pow.getDescription());

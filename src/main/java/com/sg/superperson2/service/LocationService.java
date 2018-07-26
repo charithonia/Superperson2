@@ -9,7 +9,7 @@ import java.util.List;
 
 import com.sg.superperson2.exception.*;
 import com.sg.superperson2.model.Location;
-import com.sg.superperson2.model.LocationCommandModel;
+import com.sg.superperson2.model.LocationCommand;
 
 /**
  *
@@ -20,19 +20,19 @@ public interface LocationService {
     public Location addLocation(Location location)
 	    throws InvalidObjectException, DuplicateObjectException;
     
-    public Location addLocation(LocationCommandModel locCM)
+    public Location addLocation(LocationCommand locCM)
 	    throws InvalidObjectException, DuplicateObjectException;
     
     public void removeLocation(Location location)
 	    throws NotFoundException, DeleteLinkedObjectException;
     
-    public void removeLocation(LocationCommandModel locCM)
+    public void removeLocation(LocationCommand locCM)
 	    throws NotFoundException, DeleteLinkedObjectException;
     
     public void updateLocation(Location location)
 	    throws InvalidObjectException;
     
-    public void updateLocation(LocationCommandModel locCM)
+    public void updateLocation(LocationCommand locCM)
 	    throws InvalidObjectException;
     
     public List<Location> getAllLocations();

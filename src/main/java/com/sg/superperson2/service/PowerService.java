@@ -9,7 +9,7 @@ import java.util.List;
 
 import com.sg.superperson2.exception.*;
 import com.sg.superperson2.model.Power;
-import com.sg.superperson2.model.PowerCommandModel;
+import com.sg.superperson2.model.PowerCommand;
 
 /**
  *
@@ -20,13 +20,13 @@ public interface PowerService {
     public Power addPower(Power power)
 	    throws InvalidObjectException, DuplicateObjectException;
     
-    public Power addPower(PowerCommandModel powerCM)
+    public Power addPower(PowerCommand powerCM)
 	    throws InvalidObjectException, DuplicateObjectException;
     
     public void removePower(Power power)
 	    throws NotFoundException;
     
-    public void removePower(PowerCommandModel powerCM)
+    public void removePower(PowerCommand powerCM)
 	    throws NotFoundException;
     
     public void updatePower(Power power)

@@ -11,10 +11,12 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.sg.superperson2.model.SightingCommandModel;
+import com.sg.superperson2.model.SightingView;
 import com.sg.superperson2.service.SightingService;
 
 /**
@@ -22,17 +24,16 @@ import com.sg.superperson2.service.SightingService;
  * @author main
  */
 @Controller
-@RequestMapping({"/"})
 public class IndexController {
     
     @Inject
     SightingService sigService;
     
-    @RequestMapping("/")
-    public String index(Map<String, Object> model) {
+    @GetMapping("/")
+    public String displayIndex(Model model) {
+	List<SightingView> sigViews = sigService.getAllSightingViews();
+	model.addAttribute("sightings", sigViews);
 	
-	// Get all sightings to display on homepage
-	List<SightingCommandModel> sigCMs = sigService.getAllSightingCommands();
-	return "/";
+	return "index";
     }
 }

@@ -9,7 +9,7 @@ import java.util.List;
 
 import com.sg.superperson2.exception.*;
 import com.sg.superperson2.model.Address;
-import com.sg.superperson2.model.AddressCommandModel;
+import com.sg.superperson2.model.AddressCommand;
 
 /**
  *
@@ -20,19 +20,19 @@ public interface AddressService {
     public Address addAddress(Address address)
 	    throws InvalidObjectException;
     
-    public Address addAddress(AddressCommandModel adrCM)
+    public Address addAddress(AddressCommand adrCM)
 	    throws InvalidObjectException;
     
     public void removeAddress(Address address)
 	    throws NotFoundException, DeleteLinkedObjectException;
     
-    public void removeAddress(AddressCommandModel adrCM)
+    public void removeAddress(AddressCommand adrCM)
 	    throws NotFoundException, DeleteLinkedObjectException;
     
     public void updateAddress(Address address)
 	    throws InvalidObjectException;
     
-    public void updateAddress(AddressCommandModel adrCM)
+    public void updateAddress(AddressCommand adrCM)
 	    throws InvalidObjectException;
     
     public List<Address> getAllAddresses();
