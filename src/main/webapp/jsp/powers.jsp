@@ -1,6 +1,6 @@
 <%-- 
-    Document   : sightings
-    Created on : Jul 26, 2018, 11:25:32 AM
+    Document   : powers
+    Created on : Jul 27, 2018, 11:54:15 AM
     Author     : main
 --%>
 
@@ -24,35 +24,28 @@
 		    </div>
 		    <ul class="nav navbar-nav">
 			<li role="presentation"><a href="${pageContext.request.contextPath}/">Home</a></li>
-			<li role="presentation" class="active"><a href="${pageContext.request.contextPath}/sightings">Sightings</a></li>
-			<li role="presentation"><a href="${pageContext.request.contextPath}/powers">Powers</a></li>
+			<li role="presentation"><a href="${pageContext.request.contextPath}/sightings">Sightings</a></li>
+			<li role="presentation" class="active"><a href="${pageContext.request.contextPath}/powers">Powers</a></li>
 		    </ul>
 		</div>
 	    </nav>
-            <h1>Sightings</h1>
+            <h1>Powers</h1>
 	    <hr/>
 	    <table class="table table-hover">
 		<thead>
 		    <tr>
-			<th>Date</th>
-			<th>Superpersons</th>
-			<th>Location</th>
+			<th>Name</th>
+			<th>Description</th>
 		    </tr>
 		</thead>
 		<tbody>
-		    <c:forEach var="sighting" items="${sightings}">
+		    <c:forEach var="power" items="${powers}">
 			<tr>
 			    <td>
-				<c:out value="${sighting.timestamp}"/>
+				<c:out value="${power.name}"/>
 			    </td>
 			    <td>
-				<c:forEach var="superperson" items="${sighting.superpersons}" varStatus="status">
-				    <c:out value="${superperson.name}"/>
-				    <c:if test="${!status.last}"><br/></c:if>
-				</c:forEach>
-			    </td>
-			    <td>
-				<c:out value="${sighting.location.name}"/>
+				<c:out value="${power.description}"/>
 			    </td>
 			</tr>
 		    </c:forEach>

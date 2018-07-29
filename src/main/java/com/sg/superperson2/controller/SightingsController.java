@@ -23,16 +23,17 @@ import com.sg.superperson2.service.SightingService;
  * @author main
  */
 @Controller
-public class IndexController {
+@RequestMapping("/sightings")
+public class SightingsController {
     
     @Inject
     SightingService sigService;
     
     @GetMapping
-    public String displayIndex(Model model) {
+    public String displaySightings(Model model) {
 	List<SightingView> sigViews = sigService.getAllSightingViews();
 	model.addAttribute("sightings", sigViews);
 	
-	return "index";
+	return "sightings";
     }
 }

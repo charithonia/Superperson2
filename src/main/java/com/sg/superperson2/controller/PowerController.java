@@ -15,24 +15,25 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.sg.superperson2.model.SightingView;
-import com.sg.superperson2.service.SightingService;
+import com.sg.superperson2.model.PowerView;
+import com.sg.superperson2.service.PowerService;
 
 /**
  *
  * @author main
  */
 @Controller
-public class IndexController {
+@RequestMapping("/powers")
+public class PowerController {
     
     @Inject
-    SightingService sigService;
+    PowerService powService;
     
     @GetMapping
-    public String displayIndex(Model model) {
-	List<SightingView> sigViews = sigService.getAllSightingViews();
-	model.addAttribute("sightings", sigViews);
+    public String displayPowers(Model model) {
+	List<PowerView> powViews = powService.getAllPowerViews();
+	model.addAttribute("powers", powViews);
 	
-	return "index";
+	return "powers";
     }
 }

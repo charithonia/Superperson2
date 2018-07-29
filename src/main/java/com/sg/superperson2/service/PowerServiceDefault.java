@@ -5,6 +5,7 @@
  */
 package com.sg.superperson2.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -13,6 +14,7 @@ import com.sg.superperson2.dao.PowerDao;
 import com.sg.superperson2.exception.*;
 import com.sg.superperson2.model.Power;
 import com.sg.superperson2.model.PowerCommand;
+import com.sg.superperson2.model.PowerView;
 
 /**
  *
@@ -71,6 +73,30 @@ public class PowerServiceDefault implements PowerService {
     @Override
     public Power getPowerById(int id) {
 	return powDao.getPowerById(id);
+    }
+    
+    @Override
+    public PowerCommand getPowerCommandById(int id) {
+	Power pow = getPowerById(id);
+	PowerCommand powCom = convertToCommand(pow);
+	
+	return powCom;
+    }
+    
+    @Override
+    public List<PowerView> getAllPowerViews() {
+	List<Power> pows = getAllPowers();
+	List<PowerView> powViews = convertToView(pows);
+	
+	return powViews;
+    }
+    
+    @Override
+    public PowerView getPowerViewById(int id) {
+	Power pow = getPowerById(id);
+	PowerView powView = convertToView(pow);
+	
+	return powView;
     }
     
     private void validate(Power power)
@@ -132,12 +158,31 @@ public class PowerServiceDefault implements PowerService {
 	return pow;
     }
     
-    private PowerCommand convertToCommandModel(Power pow) {
+    private PowerCommand convertToCommand(Power pow) {
 	PowerCommand powCM = new PowerCommand();
 	powCM.setId(pow.getId());
 	powCM.setName(pow.getName());
 	powCM.setDescription(pow.getDescription());
 	
 	return powCM;
+    }
+    
+    private PowerView convertToView(Power pow) {
+	PowerView powView = new PowerView();
+	powView.setId(pow.getId());
+	powView.setName(pow.getName());
+	powView.setDescription(pow.getDescription());
+	
+	return powView;
+    }
+    
+    private List<PowerView> convertToView(List<Power> pows) {
+	List<PowerView> powViews = new ArrayList<>();
+	for (Power pow : pows) {
+	    PowerView powView = convertToView(pow);
+	    powViews.add(powView);
+	}
+	
+	return powViews;
     }
 }

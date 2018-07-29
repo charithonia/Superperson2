@@ -10,6 +10,7 @@ import java.util.List;
 import com.sg.superperson2.exception.*;
 import com.sg.superperson2.model.Power;
 import com.sg.superperson2.model.PowerCommand;
+import com.sg.superperson2.model.PowerView;
 
 /**
  *
@@ -35,4 +36,10 @@ public interface PowerService {
     public List<Power> getAllPowers();
     
     public Power getPowerById(int id);
+    
+    public PowerCommand getPowerCommandById(int id);
+    
+    public List<PowerView> getAllPowerViews();
+    
+    public PowerView getPowerViewById(int id);
 }

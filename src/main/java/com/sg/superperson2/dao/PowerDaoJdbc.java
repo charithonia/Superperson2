@@ -38,7 +38,7 @@ public class PowerDaoJdbc implements PowerDao {
 	    + "where id = ?";
     
     private final String SQL_SELECT_ALL_POWERS =
-	    "select * from power";
+	    "select * from power order by `name`";
     
     private final String SQL_SELECT_POWER_BY_ID =
 	    "select * from power where id = ?";
