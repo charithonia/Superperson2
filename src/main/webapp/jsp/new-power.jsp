@@ -14,10 +14,28 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
         <title>Superperson Tracker</title>
+	<link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
     </head>
     <body>
         <h1>New Power</h1>
 	<hr/>
+	<form role="form" action="create-power" method="POST">
+	    <div class="form-group">
+		<label for="name" class="control-label">Power Name:</label>
+		<input name="name" type="text" title="name"/>
+	    </div>
+	    <div class="form-group">
+		<label for="description" class="control-label">Description:</label>
+		<textarea name="description" rows="10"></textarea>
+	    </div>
+	    <div class="form-group">
+		<input type="submit" class="btn btn-primary" value="Create"/>
+		<a href="${pageContext.request.contextPath}/powers"
+		   typ="button" class="btn btn-primary">
+		    Cancel
+		</a>
+	    </div>
+	</form>
 	
 	<script src="${pageContext.request.contextPath}/js/jquery-3.1.1.min.js"></script>
         <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>

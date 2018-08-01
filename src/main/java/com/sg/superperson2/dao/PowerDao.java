@@ -18,7 +18,7 @@ public interface PowerDao {
     
     public Power addPower(Power power);
     
-    public void removePower(Power power);
+    public Power removePower(Power power);
     
     public void updatePower(Power power);
     

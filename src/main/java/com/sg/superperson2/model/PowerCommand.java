@@ -5,15 +5,32 @@
  */
 package com.sg.superperson2.model;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
+
 /**
  *
  * @author main
  */
 public class PowerCommand {
+    private String message;
     private int id;
+    
+    @NotEmpty(message = "Name required.")
+    @Length(max = 100, message = "Field exceeds maximum length (100).")
     private String name;
+    
+    @Length (max = 1000, message = "Field exceeds maximum length (1000).")
     private String description;
 
+    public String getMessage() {
+	return message;
+    }
+    
+    public void setMessage(String message) {
+	this.message = message;
+    }
+    
     public int getId() {
 	return id;
     }

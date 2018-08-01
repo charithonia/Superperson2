@@ -31,11 +31,17 @@
 	    </nav>
             <h1>Powers</h1>
 	    <hr/>
+	    <a class="btn btn-primary" href="powers/new-power" role="button">
+		New Power
+	    </a>
+	    <hr/>
 	    <table class="table table-hover">
 		<thead>
 		    <tr>
-			<th>Name</th>
-			<th>Description</th>
+			<th width="20">Name</th>
+			<th width="50">Description</th>
+			<th width="15"></th>
+			<th width="15"></th>
 		    </tr>
 		</thead>
 		<tbody>
@@ -46,6 +52,16 @@
 			    </td>
 			    <td>
 				<c:out value="${power.description}"/>
+			    </td>
+			    <td>
+				<a href="#">
+				    Edit
+				</a>
+			    </td>
+			    <td>
+				<a href="powers/delete-power?id=${power.id}">
+				    Delete
+				</a>
 			    </td>
 			</tr>
 		    </c:forEach>

@@ -26,43 +26,59 @@ public class PowerServiceDefault implements PowerService {
     PowerDao powDao;
     
     @Override
-    public Power addPower(Power power)
+    public Power addPower(Power pow)
 	    throws InvalidObjectException, DuplicateObjectException {
-	if (!isValid(power)) {
-	    throw new InvalidObjectException();
+	if (!isValid(pow)) {
+	    throw new InvalidObjectException("Power is invalid.");
 	}
-	if (!isDuplicate(power)) {
-	    throw new DuplicateObjectException();
+	if (isDuplicate(pow)) {
+	    throw new DuplicateObjectException("Power is a duplicate.");
 	}
 	
-	return powDao.addPower(power);
+	return powDao.addPower(pow);
     }
     
     @Override
-    public Power addPower(PowerCommand powCM)
+    public Power addPower(PowerCommand powCom)
 	    throws InvalidObjectException, DuplicateObjectException {
-	Power pow = convertFromCommand(powCM);
+	Power pow = convertFromCommand(powCom);
 	return addPower(pow);
     }
     
     @Override
-    public void removePower(Power power)
-	    throws NotFoundException {
-	powDao.removePower(power);
+    public Power removePower(Power pow) {
+	if (!exists(pow)) {
+	    return null;
+	}
+	return powDao.removePower(pow);
+    }
+    
+    // !
+    // Remove?
+    @Override
+    public Power removePower(PowerCommand powCom) {
+	Power pow = convertFromCommand(powCom);
+	return removePower(pow);
     }
     
     @Override
-    public void removePower(PowerCommand powCM)
-	    throws NotFoundException {
-	Power pow = convertFromCommand(powCM);
-	removePower(pow);
+    public Power removePowerById(int id) {
+	Power pow = new Power();
+	pow.setId(id);
+	
+	return removePower(pow);
     }
     
     @Override
-    public void updatePower(Power power)
+    public void updatePower(Power pow)
 	    throws InvalidObjectException, DuplicateObjectException {
-	validate(power);
-	powDao.updatePower(power);
+	if (!isValid(pow)) {
+	    throw new InvalidObjectException("Power is invalid.");
+	}
+	if (isDuplicate(pow)) {
+	    throw new DuplicateObjectException("Power is a duplicate.");
+	}
+	powDao.updatePower(pow);
     }
     
     @Override
@@ -99,17 +115,48 @@ public class PowerServiceDefault implements PowerService {
 	return powView;
     }
     
-    private void validate(Power power)
-	    throws InvalidObjectException, DuplicateObjectException {
-	boolean isValid = isValid(power);
-	if (!isValid) {
-	    throw new InvalidObjectException("Power is invalid.");
+    @Override
+    public Power convertFromCommand(PowerCommand powCM) {
+	Power pow = new Power();
+	
+	int id = powCM.getId();
+	if (id != 0) {
+	    pow.setId(id);
 	}
 	
-	boolean isDuplicate = isDuplicate(power);
-	if (isDuplicate) {
-	    throw new DuplicateObjectException("Power is a duplicate.");
+	pow.setName(powCM.getName());
+	pow.setDescription(powCM.getDescription());
+	
+	return pow;
+    }
+    
+    @Override
+    public PowerCommand convertToCommand(Power pow) {
+	PowerCommand powCM = new PowerCommand();
+	powCM.setId(pow.getId());
+	powCM.setName(pow.getName());
+	powCM.setDescription(pow.getDescription());
+	
+	return powCM;
+    }
+    
+    private PowerView convertToView(Power pow) {
+	PowerView powView = new PowerView();
+	powView.setId(pow.getId());
+	powView.setName(pow.getName());
+	powView.setDescription(pow.getDescription());
+	
+	return powView;
+    }
+    
+    private List<PowerView> convertToView(List<Power> pows) {
+	List<PowerView> powViews = new ArrayList<>();
+	for (Power pow : pows) {
+	    PowerView powView = convertToView(pow);
+	    powViews.add(powView);
 	}
+	
+	return powViews;
     }
     
     private boolean isValid(Power power) {
@@ -142,47 +189,5 @@ public class PowerServiceDefault implements PowerService {
     private boolean exists(Power power) {
 	Power result = getPowerById(power.getId());
 	return (result != null);
-    }
-    
-    private Power convertFromCommand(PowerCommand powCM) {
-	Power pow = new Power();
-	
-	int id = powCM.getId();
-	if (id != 0) {
-	    pow.setId(id);
-	}
-	
-	pow.setName(powCM.getName());
-	pow.setDescription(powCM.getDescription());
-	
-	return pow;
-    }
-    
-    private PowerCommand convertToCommand(Power pow) {
-	PowerCommand powCM = new PowerCommand();
-	powCM.setId(pow.getId());
-	powCM.setName(pow.getName());
-	powCM.setDescription(pow.getDescription());
-	
-	return powCM;
-    }
-    
-    private PowerView convertToView(Power pow) {
-	PowerView powView = new PowerView();
-	powView.setId(pow.getId());
-	powView.setName(pow.getName());
-	powView.setDescription(pow.getDescription());
-	
-	return powView;
-    }
-    
-    private List<PowerView> convertToView(List<Power> pows) {
-	List<PowerView> powViews = new ArrayList<>();
-	for (Power pow : pows) {
-	    PowerView powView = convertToView(pow);
-	    powViews.add(powView);
-	}
-	
-	return powViews;
     }
 }
