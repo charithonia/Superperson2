@@ -16,7 +16,7 @@
         <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
     </head>
     <body>
-        <div class="container">
+        <div class="container-fluid">
             <nav class="navbar navbar-default">
 		<div class="container-fluid">
 		    <div class="navbar-header">
@@ -25,18 +25,23 @@
 		    <ul class="nav navbar-nav">
 			<li role="presentation"><a href="${pageContext.request.contextPath}/">Home</a></li>
 			<li role="presentation" class="active"><a href="${pageContext.request.contextPath}/sightings">Sightings</a></li>
+			<li role="presentation"><a href="${pageContext.request.contextPath}/superpeople">Superpeople</a></li>
 			<li role="presentation"><a href="${pageContext.request.contextPath}/powers">Powers</a></li>
 		    </ul>
 		</div>
 	    </nav>
             <h1>Sightings</h1>
 	    <hr/>
+	    <a class="btn btn-primary" href="sightings/new-sighting" role="button">
+		Report Sighting
+	    </a>
+	    <hr/>
 	    <table class="table table-hover">
 		<thead>
 		    <tr>
-			<th>Date</th>
-			<th>Superpersons</th>
-			<th>Location</th>
+			<th width="20%">Date</th>
+			<th width="50%">Superpeople</th>
+			<th width="30%">Location</th>
 		    </tr>
 		</thead>
 		<tbody>

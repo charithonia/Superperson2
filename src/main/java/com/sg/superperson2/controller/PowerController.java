@@ -9,7 +9,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,8 +17,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-
 
 import com.sg.superperson2.exception.*;
 import com.sg.superperson2.model.PowerCommand;
@@ -52,17 +49,13 @@ public class PowerController {
     }
     
     @PostMapping("/create-power")
-    public String createPower(HttpServletRequest request) {
-	PowerCommand powCom = new PowerCommand();
-	powCom.setName(request.getParameter("name"));
-	powCom.setDescription(request.getParameter("description"));
-	
+    public String createPower(@ModelAttribute("power") PowerCommand powCom,
+	    BindingResult result) {
 	try {
 	    powService.addPower(powCom);
 	}
-	catch(InvalidObjectException
-		| DuplicateObjectException ex) {
-	    powCom.setMessage(ex.getMessage());
+	catch(InvalidObjectException | DuplicateObjectException ex) {
+	    return "new-power";
 	}
 	
 	return "redirect:/powers";
@@ -74,6 +67,30 @@ public class PowerController {
 	int id = Integer.parseInt(idParameter);
 	
 	powService.removePowerById(id);
+	
+	return "redirect:/powers";
+    }
+    
+    @GetMapping("/edit-power")
+    public String editPowerPage(HttpServletRequest request, Model model) {
+	String idParameter = request.getParameter("id");
+	int id = Integer.parseInt(idParameter);
+	
+	PowerCommand powCom = powService.getPowerCommandById(id);
+	model.addAttribute("power", powCom);
+	
+	return "edit-power";
+    }
+    
+    @PostMapping("/edit-power")
+    public String editPower(@ModelAttribute("power") PowerCommand powCom,
+	    BindingResult result, Model model) {
+	try {
+	    powService.updatePower(powCom);
+	}
+	catch (InvalidObjectException | DuplicateObjectException ex) {	    
+	    return "/edit-power";
+	}
 	
 	return "redirect:/powers";
     }

@@ -73,12 +73,15 @@ public class PowerDaoJdbc implements PowerDao {
     
     @Override
     public Power removePower(Power pow) {
-	Power powCopy = getPowerById(pow.getId());
+	Power originalPow = getPowerById(pow.getId());
+	if (originalPow == null) {
+	    return null;
+	}
 	
 	jdbcTemplate.update(SQL_DELETE_POWER,
 		pow.getId());
 	
-	return powCopy;
+	return originalPow;
     }
     
     @Override

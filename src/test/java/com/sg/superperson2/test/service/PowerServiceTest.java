@@ -135,6 +135,49 @@ public class PowerServiceTest {
     
     @Test
     @Transactional
+    public void testConvertPowerFromCommand() {
+	PowerCommand powCom1 = new PowerCommand();
+	powCom1.setName("Test");
+	powCom1.setDescription("Description.");
+	
+	PowerCommand powCom2 = new PowerCommand();
+	powCom2.setName("Test Power 2");
+	powCom2.setDescription("Longer description.");
+	
+	Power result = powService.convertFromCommand(powCom1);
+	
+	assertEquals("Test", result.getName());
+	assertEquals("Description.", result.getDescription());
+	
+	result = powService.convertFromCommand(powCom2);
+	
+	assertEquals("Test Power 2", result.getName());
+	assertEquals("Longer description.", result.getDescription());
+    }
+    
+    @Test
+    @Transactional
+    public void testConvertPowerToCommand() {
+	Power pow1 = new Power();
+	pow1.setName("Test");
+	pow1.setDescription("Description.");
+	
+	Power pow2 = new Power();
+	pow2.setName("Test Power 2");
+	pow2.setDescription("Longer description.");
+	
+	PowerCommand result = powService.convertToCommand(pow1);
+	
+	assertEquals("Test", result.getName());
+	assertEquals("Description.", result.getDescription());
+	
+	result = powService.convertToCommand(pow2);
+	
+	assertEquals("Test Power 2", result.getName());
+	assertEquals("Longer description.", result.getDescription());
+    }
+    @Test
+    @Transactional
     public void testAddPowerFromCommand() {
 	Power result = null;
 	
@@ -152,5 +195,48 @@ public class PowerServiceTest {
 	assertNotNull(result);
 	assertEquals("Test", result.getName());
 	assertEquals("Description.", result.getDescription());
+    }
+    
+    @Test
+    @Transactional
+    public void testUpdatePowerFromCommand() {
+	Power pow = new Power();
+	pow.setName("Test");
+	pow.setDescription("Description.");
+	
+	int powId = 0;
+	try {
+	    powService.addPower(pow);
+	    powId = pow.getId();
+	}
+	catch (InvalidObjectException | DuplicateObjectException ex) {
+	    fail("testUpdatePowerFromCommand: unexpected exception: "
+		    + ex.getMessage());
+	}
+	
+	PowerCommand powCom = new PowerCommand();
+	powCom.setId(powId);
+	powCom.setName("Test 2");
+	powCom.setDescription("Different description.");
+	
+	boolean thrownInvalid = false;
+	boolean thrownDuplicate = false;
+	try {
+	    powService.updatePower(powCom);
+	}
+	catch (InvalidObjectException ex) {
+	    thrownInvalid = true;
+	}
+	catch (DuplicateObjectException ex) {
+	    thrownDuplicate = true;
+	}
+	
+	assertFalse(thrownInvalid);
+	assertFalse(thrownDuplicate);
+	
+	Power result = powService.getPowerById(powId);
+	
+	assertEquals("Test 2", result.getName());
+	assertEquals("Different description.", result.getDescription());
     }
 }

@@ -6,6 +6,7 @@
 package com.sg.superperson2.model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,10 +19,14 @@ public class SuperpersonCommand {
     private String realName;
     private String description;
     private LocalDate dateOfBirth;
-    
-    private int organizationId;
+    private List<Integer> organizationIds;
     private List<Integer> powerIds;
 
+    public SuperpersonCommand() {
+	organizationIds = new ArrayList<>();
+	powerIds = new ArrayList<>();
+    }
+    
     public int getId() {
 	return id;
     }
@@ -62,12 +67,12 @@ public class SuperpersonCommand {
 	this.dateOfBirth = dateOfBirth;
     }
 
-    public int getOrganizationId() {
-	return organizationId;
+    public List<Integer> getOrganizationId() {
+	return organizationIds;
     }
 
-    public void setOrganizationId(int organizationId) {
-	this.organizationId = organizationId;
+    public void setOrganizationId(List<Integer> organizationIds) {
+	this.organizationIds = organizationIds;
     }
 
     public List<Integer> getPowerIds() {
@@ -76,5 +81,13 @@ public class SuperpersonCommand {
 
     public void setPowerIds(List<Integer> powerIds) {
 	this.powerIds = powerIds;
+    }
+
+    public List<Integer> getOrganizationIds() {
+	return organizationIds;
+    }
+
+    public void setOrganizationIds(List<Integer> organizationIds) {
+	this.organizationIds = organizationIds;
     }
 }

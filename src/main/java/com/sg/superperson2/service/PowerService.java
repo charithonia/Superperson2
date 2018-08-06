@@ -26,14 +26,12 @@ public interface PowerService {
     
     public Power removePower(Power power);
     
-    // !
-    // Remove?
-    public Power removePower(PowerCommand powerCM)
-	    throws NotFoundException;
-    
     public Power removePowerById(int id);
     
     public void updatePower(Power power)
+	    throws InvalidObjectException, DuplicateObjectException;
+    
+    public void updatePower(PowerCommand powerCommand)
 	    throws InvalidObjectException, DuplicateObjectException;
     
     public List<Power> getAllPowers();

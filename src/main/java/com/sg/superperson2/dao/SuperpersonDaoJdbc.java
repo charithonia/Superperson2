@@ -48,7 +48,7 @@ public class SuperpersonDaoJdbc implements SuperpersonDao {
 	    + "where id = ?";
     
     private final String SQL_SELECT_ALL_SUPERPERSONS =
-	    "select * from superperson";
+	    "select * from superperson order by name";
     
     private final String SQL_SELECT_SUPERPERSON_BY_ID =
 	    "select * from superperson where id = ?";
@@ -124,6 +124,9 @@ public class SuperpersonDaoJdbc implements SuperpersonDao {
     
     @Override
     public void removeSuperperson(Superperson sup) {
+	Superperson originalSup = getSuperpersonById(sup.getId());
+	if (originalSup == null) {}
+	
 	jdbcTemplate.update(SQL_DELETE_SUPERPERSON,
 		sup.getId());
     }

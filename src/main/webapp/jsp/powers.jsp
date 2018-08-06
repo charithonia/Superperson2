@@ -8,6 +8,7 @@
 <%@taglib prefix="s" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page errorPage="error.jsp"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -16,7 +17,7 @@
         <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
     </head>
     <body>
-        <div class="container">
+        <div class="container-fluid">
             <nav class="navbar navbar-default">
 		<div class="container-fluid">
 		    <div class="navbar-header">
@@ -25,6 +26,7 @@
 		    <ul class="nav navbar-nav">
 			<li role="presentation"><a href="${pageContext.request.contextPath}/">Home</a></li>
 			<li role="presentation"><a href="${pageContext.request.contextPath}/sightings">Sightings</a></li>
+			<li role="presentation"><a href="${pageContext.request.contextPath}/superpeople">Superpeople</a></li>
 			<li role="presentation" class="active"><a href="${pageContext.request.contextPath}/powers">Powers</a></li>
 		    </ul>
 		</div>
@@ -38,10 +40,10 @@
 	    <table class="table table-hover">
 		<thead>
 		    <tr>
-			<th width="20">Name</th>
-			<th width="50">Description</th>
-			<th width="15"></th>
-			<th width="15"></th>
+			<th width="20%">Name</th>
+			<th width="50%">Description</th>
+			<th width="15%"></th>
+			<th width="15%"></th>
 		    </tr>
 		</thead>
 		<tbody>
@@ -54,7 +56,7 @@
 				<c:out value="${power.description}"/>
 			    </td>
 			    <td>
-				<a href="#">
+				<a href="powers/edit-power?id=${power.id}">
 				    Edit
 				</a>
 			    </td>

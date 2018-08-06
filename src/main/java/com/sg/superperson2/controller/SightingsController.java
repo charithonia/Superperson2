@@ -36,8 +36,5 @@ public class SightingsController {
 	model.addAttribute("sightings", sigViews);
 	
 	return "sightings";
-    }
-    
-    @PostMapping("/new-sighting")
-    
+    }  
 }

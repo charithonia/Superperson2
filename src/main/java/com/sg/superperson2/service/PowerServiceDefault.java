@@ -47,25 +47,12 @@ public class PowerServiceDefault implements PowerService {
     
     @Override
     public Power removePower(Power pow) {
-	if (!exists(pow)) {
-	    return null;
-	}
 	return powDao.removePower(pow);
-    }
-    
-    // !
-    // Remove?
-    @Override
-    public Power removePower(PowerCommand powCom) {
-	Power pow = convertFromCommand(powCom);
-	return removePower(pow);
     }
     
     @Override
     public Power removePowerById(int id) {
-	Power pow = new Power();
-	pow.setId(id);
-	
+	Power pow = getPowerById(id);
 	return removePower(pow);
     }
     
@@ -78,7 +65,15 @@ public class PowerServiceDefault implements PowerService {
 	if (isDuplicate(pow)) {
 	    throw new DuplicateObjectException("Power is a duplicate.");
 	}
+	
 	powDao.updatePower(pow);
+    }
+    
+    @Override
+    public void updatePower(PowerCommand powCom)
+	    throws InvalidObjectException, DuplicateObjectException {
+	Power pow = convertFromCommand(powCom);
+	updatePower(pow);
     }
     
     @Override
@@ -171,19 +166,25 @@ public class PowerServiceDefault implements PowerService {
     private boolean isDuplicate(Power power) {
 	List<Power> allPowers = getAllPowers();
 	for (Power currentPower : allPowers) {
-	    if (isMatch(currentPower, power)) {
-		return true;
+	    
+	    // Skip if same id
+	    if (currentPower.getId() != power.getId()) {
+		if (isMatch(currentPower, power)) {
+		    return true;
+		}
 	    }
 	}
 	return false;
     }
     
     private boolean isMatch(Power pow1, Power pow2) {
-	if (pow1.getName()
-		.equalsIgnoreCase(pow2.getName())) {
-	    return true;
+	
+	// Skip if same id
+	if (pow1.getId() == pow2.getId()) {
+	    return false;
 	}
-	return false;
+	
+	return (pow1.getName().equalsIgnoreCase(pow2.getName()));
     }
     
     private boolean exists(Power power) {
