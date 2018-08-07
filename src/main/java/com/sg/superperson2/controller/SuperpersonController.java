@@ -53,7 +53,7 @@ public class SuperpersonController {
 	return "superpeople";
     }
     
-    @GetMapping("/new-superperson")
+    @GetMapping("new-superperson")
     public String newSuperpersonPage(ModelMap modelMap) {
 	List<Organization> orgs = orgService.getAllOrganizations();
 	modelMap.addAttribute("organizations", orgs);
@@ -64,7 +64,7 @@ public class SuperpersonController {
 	return "new-superperson";
     }
     
-    @PostMapping("/create-superperson")
+    @PostMapping("create-superperson")
     public String createSuperperson(@ModelAttribute("superperson") SuperpersonCommand supCom,
 	    BindingResult result) {
 	try {
@@ -77,12 +77,42 @@ public class SuperpersonController {
 	return "redirect:/superpeople";
     }
     
-    @GetMapping("/delete-superperson")
+    @GetMapping("delete-superperson")
     public String deleteSuperperson(HttpServletRequest request) {
 	String idParameter = request.getParameter("id");
 	int id = Integer.parseInt(idParameter);
 	
 	supService.removeSuperpersonById(id);
+	
+	return "redirect:/superpeople";
+    }
+    
+    @GetMapping("edit-superperson")
+    public String editSuperpersonPage(HttpServletRequest request, ModelMap modelMap) {
+	String idParameter = request.getParameter("id");
+	int id = Integer.parseInt(idParameter);
+	
+	List<Organization> orgs = orgService.getAllOrganizations();
+	modelMap.addAttribute("organizations", orgs);
+	
+	List<Power> pows = powService.getAllPowers();
+	modelMap.addAttribute("powers", pows);
+	
+	SuperpersonCommand supCom = supService.getSuperpersonCommandById(id);
+	modelMap.addAttribute("superperson", supCom);
+	
+	return "edit-superperson";
+    }
+    
+    @PostMapping("edit-superperson")
+    public String updateSuperperson(@ModelAttribute("superperson") SuperpersonCommand supCom,
+	    BindingResult result) {
+	try {
+	    supService.updateSuperperson(supCom);
+	}
+	catch (InvalidObjectException | DuplicateObjectException ex) {
+	    return "edit-superperson";
+	}
 	
 	return "redirect:/superpeople";
     }

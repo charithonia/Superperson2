@@ -15,6 +15,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import org.junit.runner.RunWith;
 
 import org.springframework.test.context.ContextConfiguration;
@@ -144,6 +145,57 @@ public class SuperpersonServiceTest {
 	assertNotNull(result);
 	assertEquals("Test 3", result.getName());
 	assertEquals("Description.", result.getDescription());
+	assertFalse(result.getOrganizations().isEmpty());
+	assertFalse(result.getPowers().isEmpty());
+    }
+    
+    @Test
+    @Transactional
+    public void testUpdateSuperpersonFromCommand() {
+	
+	// Provide no initial orgs/powers
+	Superperson sup = new Superperson();
+	sup.setName("Test");
+	sup.setDescription("Description");
+	
+	try {
+	    supService.addSuperperson(sup);
+	}
+	catch (InvalidObjectException | DuplicateObjectException ex) {
+	    fail("testUpdateSuperpersonFromCommand: unexpected exception: "
+		    +ex.getMessage());
+	}
+	
+	int supId = sup.getId();
+	
+	// Update with some orgs/powers
+	SuperpersonCommand supCom = new SuperpersonCommand();
+	supCom.setId(supId);
+	supCom.setName("Test");
+	supCom.setDescription("Different description.");
+	
+	List<Integer> orgIds = new ArrayList<>();
+	orgIds.add(1);
+	supCom.setOrganizationIds(orgIds);
+	
+	List<Integer> powIds = new ArrayList<>();
+	powIds.add(1);
+	powIds.add(2);
+	supCom.setPowerIds(powIds);
+	
+	try {
+	    supService.updateSuperperson(supCom);
+	}
+	catch (InvalidObjectException | DuplicateObjectException ex) {
+	    fail("testUpdateSuperpersonFromCommand: unexpected exception: "
+		    +ex.getMessage());
+	}
+	
+	Superperson result = supService.getSuperpersonById(supId);
+	
+	assertNotNull(result);
+	assertEquals("Test", result.getName());
+	assertEquals("Different description.", result.getDescription());
 	assertFalse(result.getOrganizations().isEmpty());
 	assertFalse(result.getPowers().isEmpty());
     }

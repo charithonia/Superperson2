@@ -5,13 +5,16 @@
  */
 package com.sg.superperson2.test.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import org.junit.Test;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import org.junit.runner.RunWith;
 
 import org.springframework.test.context.ContextConfiguration;
@@ -20,7 +23,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.sg.superperson2.exception.*;
 import com.sg.superperson2.model.Sighting;
+import com.sg.superperson2.model.SightingCommand;
 import com.sg.superperson2.model.SightingView;
+import com.sg.superperson2.model.User;
 import com.sg.superperson2.service.SightingService;
 
 /**
@@ -59,5 +64,30 @@ public class SightingServiceTest {
 	List<SightingView> sigViews = sigService.getAllSightingViews();
 	
 	assertFalse(sigViews.isEmpty());
+    }
+    
+    @Test
+    @Transactional
+    public void testAddSightingFromCommand() {
+	SightingCommand sigCom = new SightingCommand();
+	sigCom.setUserId(1);
+	sigCom.setLocationId(1);
+	
+	List<Integer> supIds = new ArrayList<>();
+	supIds.add(1);
+	supIds.add(2);
+	sigCom.setSuperpersonIds(supIds);
+	
+	Sighting result = null;
+	try {
+	    result = sigService.addSighting(sigCom);
+	}
+	catch (InvalidObjectException ex) {
+	    fail("testAddSightingFromCommand: unexpected exception: "
+		    + ex.getMessage());
+	}
+	
+	assertNotNull(result);
+	assertFalse(result.getSuperpersons().isEmpty());
     }
 }

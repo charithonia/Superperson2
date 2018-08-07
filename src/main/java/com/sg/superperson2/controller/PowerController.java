@@ -84,7 +84,7 @@ public class PowerController {
     
     @PostMapping("/edit-power")
     public String editPower(@ModelAttribute("power") PowerCommand powCom,
-	    BindingResult result, Model model) {
+	    BindingResult result) {
 	try {
 	    powService.updatePower(powCom);
 	}

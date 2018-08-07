@@ -38,6 +38,8 @@ public interface SuperpersonService {
     
     public Superperson getSuperpersonById(int id);
     
+    public SuperpersonCommand getSuperpersonCommandById(int id);
+    
     public List<SuperpersonView> getAllSuperpersonViews();
     
     public SuperpersonView getSuperpersonViewById(int id);

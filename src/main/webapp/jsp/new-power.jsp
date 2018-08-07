@@ -13,8 +13,9 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
-        <title>Superperson Tracker</title>
+        <title>Superperson Tracker - New Power</title>
 	<link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath}/css/superperson2.css" rel="stylesheet">
     </head>
     <body>
 	<div class="container-fluid">

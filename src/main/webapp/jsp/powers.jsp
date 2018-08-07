@@ -13,8 +13,9 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
-        <title>Superperson Tracker</title>
+        <title>Superperson Tracker - Powers</title>
         <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath}/css/superperson2.css" rel="stylesheet">
     </head>
     <body>
         <div class="container-fluid">
@@ -41,9 +42,9 @@
 		<thead>
 		    <tr>
 			<th width="20%">Name</th>
-			<th width="50%">Description</th>
-			<th width="15%"></th>
-			<th width="15%"></th>
+			<th width="60%">Description</th>
+			<th width="10%"></th>
+			<th width="10%"></th>
 		    </tr>
 		</thead>
 		<tbody>
@@ -55,12 +56,12 @@
 			    <td>
 				<c:out value="${power.description}"/>
 			    </td>
-			    <td>
+			    <td align="center">
 				<a href="powers/edit-power?id=${power.id}">
 				    Edit
 				</a>
 			    </td>
-			    <td>
+			    <td align="center">
 				<a href="powers/delete-power?id=${power.id}">
 				    Delete
 				</a>

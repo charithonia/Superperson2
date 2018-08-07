@@ -95,6 +95,14 @@ public class SuperpersonServiceDefault implements SuperpersonService {
     }
     
     @Override
+    public SuperpersonCommand getSuperpersonCommandById(int id) {
+	Superperson sup = getSuperpersonById(id);
+	SuperpersonCommand supCom = convertToCommand(sup);
+	
+	return supCom;
+    }
+    
+    @Override
     public List<SuperpersonView> getAllSuperpersonViews() {
 	List<Superperson> sups = getAllSuperpersons();
 	List<SuperpersonView> supViews = convertToView(sups);
@@ -133,6 +141,32 @@ public class SuperpersonServiceDefault implements SuperpersonService {
 	sup.setPowers(pows);
 	
 	return sup;
+    }
+    
+    private SuperpersonCommand convertToCommand(Superperson sup) {
+	SuperpersonCommand supCom = new SuperpersonCommand();
+	
+	int id = sup.getId();
+	if (id != 0) {
+	    supCom.setId(id);
+	}
+	
+	supCom.setName(sup.getName());
+	supCom.setDescription(sup.getDescription());
+	
+	List<Integer> orgIds = new ArrayList<>();
+	for (Organization currentOrg : sup.getOrganizations()) {
+	    orgIds.add(currentOrg.getId());
+	}
+	supCom.setOrganizationIds(orgIds);
+	
+	List<Integer> powIds = new ArrayList<>();
+	for (Power currentPow : sup.getPowers()) {
+	    powIds.add(currentPow.getId());
+	}
+	supCom.setPowerIds(powIds);
+	
+	return supCom;
     }
     
     private SuperpersonView convertToView(Superperson sup) {

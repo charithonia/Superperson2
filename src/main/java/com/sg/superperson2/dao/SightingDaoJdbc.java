@@ -46,10 +46,10 @@ public class SightingDaoJdbc implements SightingDao {
 	    + "where id = ?";
     
     private final String SQL_SELECT_ALL_SIGHTINGS =
-	    "select * from sighting order by timestamp";
+	    "select * from sighting order by timestamp desc";
     
     private final String SQL_SELECT_ALL_SIGHTINGS_LIMIT_OFFSET =
-	    "select * from sighting order by timestamp "
+	    "select * from sighting order by timestamp desc"
 	    + "limit ? offset ?";
     
     private final String SQL_SELECT_SIGHTING_BY_ID =

@@ -160,9 +160,10 @@ public class SightingServiceDefault implements SightingService {
 	sig.setLocation(loc);
 	
 	List<Superperson> sups = new ArrayList<>();
-	for (Integer supId : sigCom.getSuperpersonIds()) {
+	for (int supId : sigCom.getSuperpersonIds()) {
 	    Superperson sup = new Superperson();
 	    sup.setId(supId);
+	    sups.add(sup);
 	}
 	sig.setSuperpersons(sups);
 	

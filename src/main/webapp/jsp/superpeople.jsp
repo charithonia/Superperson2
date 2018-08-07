@@ -12,8 +12,9 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
-        <title>Superperson Tracker</title>
+        <title>Superperson Tracker - Superpeople</title>
         <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath}/css/superperson2.css" rel="stylesheet">
     </head>
     <body>
 	<div class="container-fluid">
@@ -39,10 +40,10 @@
 	    <table class="table table-hover">
 		<thead>
 		    <tr>
-			<th width="20">Name</th>
-			<th width="50">Description</th>
-			<th width="15"></th>
-			<th width="15"></th>
+			<th width="30%">Name</th>
+			<th width="50%">Powers</th>
+			<th width="10%"></th>
+			<th width="10%"></th>
 		    </tr>
 		</thead>
 		<c:forEach var="superperson" items="${superpersons}">
@@ -50,15 +51,18 @@
 			<td>
 			    <c:out value="${superperson.name}"/>
 			</td>
-			<td>
-			    <c:out value="${superperson.description}"/>
+			<td class="text-nowrap">
+			    <c:forEach var="power" items="${superperson.powers}" varStatus="status">
+				<c:out value="${power.name}"/>
+				<c:if test="${!status.last}">,</c:if>
+			    </c:forEach>
 			</td>
-			<td>
-			    <a href="#">
+			<td align="center">
+			    <a href="superpeople/edit-superperson?id=${superperson.id}">
 				Edit
 			    </a>
 			</td>
-			<td>
+			<td align="center">
 			    <a href="superpeople/delete-superperson?id=${superperson.id}">
 				Delete
 			    </a>

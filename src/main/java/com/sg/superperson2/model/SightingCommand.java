@@ -6,6 +6,7 @@
 package com.sg.superperson2.model;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,6 +20,10 @@ public class SightingCommand {
     private List<Integer> superpersonIds;
     private int userId;
 
+    public SightingCommand() {
+	superpersonIds = new ArrayList<>();
+    }
+    
     public int getId() {
 	return id;
     }

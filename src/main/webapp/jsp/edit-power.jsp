@@ -9,13 +9,13 @@
 <%@taglib prefix="s" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page errorPage="error.jsp"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
-        <title>Superperson 2 - Edit Power</title>
+        <title>Superperson Tracker - Edit Power</title>
 	<link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath}/css/superperson2.css" rel="stylesheet">
     </head>
     <body>
 	<div class="container-fluid">

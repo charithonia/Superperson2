@@ -12,8 +12,9 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
-        <title>Superperson Tracker</title>
+        <title>Superperson Tracker - Sightings</title>
         <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath}/css/superperson2.css" rel="stylesheet">
     </head>
     <body>
         <div class="container-fluid">
@@ -40,8 +41,10 @@
 		<thead>
 		    <tr>
 			<th width="20%">Date</th>
-			<th width="50%">Superpeople</th>
-			<th width="30%">Location</th>
+			<th width="40%">Superpeople</th>
+			<th width="20%">Location</th>
+			<th width="10%"></th>
+			<th width="10%"></th>
 		    </tr>
 		</thead>
 		<tbody>
@@ -50,14 +53,24 @@
 			    <td>
 				<c:out value="${sighting.timestamp}"/>
 			    </td>
-			    <td>
+			    <td class="wrap">
 				<c:forEach var="superperson" items="${sighting.superpersons}" varStatus="status">
 				    <c:out value="${superperson.name}"/>
-				    <c:if test="${!status.last}"><br/></c:if>
+				    <c:if test="${!status.last}">,</c:if>
 				</c:forEach>
 			    </td>
 			    <td>
 				<c:out value="${sighting.location.name}"/>
+			    </td>
+			    <td align="center">
+				<a href="#">
+				    Edit
+				</a>
+			    </td>
+			    <td align="center">
+				<a href="#">
+				    Delete
+				</a>
 			    </td>
 			</tr>
 		    </c:forEach>

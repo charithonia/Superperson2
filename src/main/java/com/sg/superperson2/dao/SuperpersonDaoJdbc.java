@@ -133,7 +133,13 @@ public class SuperpersonDaoJdbc implements SuperpersonDao {
     
     @Override
     public void updateSuperperson(Superperson sup) {
-	Date dob = Date.valueOf(sup.getDateOfBirth());
+	Date dob;
+	if (sup.getDateOfBirth() != null) {
+	    dob = Date.valueOf(sup.getDateOfBirth());
+	}
+	else {
+	    dob = null;
+	}
 	
 	jdbcTemplate.update(SQL_UPDATE_SUPERPERSON,
 		sup.getName(),
