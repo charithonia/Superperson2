@@ -9,12 +9,12 @@ package com.sg.superperson2.model;
  *
  * @author main
  */
-public class OrganizationCommand {
+public class OrganizationView {
     private int id;
     private String name;
     private String head;
     private String description;
-    private int locationId;
+    private Location location;
 
     public int getId() {
 	return id;
@@ -39,20 +39,20 @@ public class OrganizationCommand {
     public void setHead(String head) {
 	this.head = head;
     }
-
+    
     public String getDescription() {
 	return description;
     }
-
+    
     public void setDescription(String description) {
 	this.description = description;
     }
 
-    public int getLocationId() {
-	return locationId;
+    public Location getLocation() {
+	return location;
     }
 
-    public void setLocationId(int locationId) {
-	this.locationId = locationId;
+    public void setLocation(Location location) {
+	this.location = location;
     }
 }

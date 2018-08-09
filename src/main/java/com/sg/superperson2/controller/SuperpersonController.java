@@ -53,6 +53,17 @@ public class SuperpersonController {
 	return "superpeople";
     }
     
+    @GetMapping("superperson")
+    public String superpersonPage(HttpServletRequest request, Model model) {
+	String idParameter = request.getParameter("id");
+	int id = Integer.parseInt(idParameter);
+	
+	SuperpersonView supView = supService.getSuperpersonViewById(id);
+	model.addAttribute("superperson", supView);
+	
+	return "superperson";
+    }
+    
     @GetMapping("new-superperson")
     public String newSuperpersonPage(ModelMap modelMap) {
 	List<Organization> orgs = orgService.getAllOrganizations();

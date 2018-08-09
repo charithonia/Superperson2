@@ -97,12 +97,13 @@ public class OrganizationDaoJdbc implements OrganizationDao {
     public void updateOrganization(Organization org) {
 	
 	// Location check
-	Integer locationId;
-	if (org.getLocation() != null) {
-	    locationId = org.getLocation().getId();
-	}
-	else {
-	    locationId = null;
+	Integer locationId = null;
+	Location loc = org.getLocation();
+	if (loc != null) {
+	    int id = loc.getId();
+	    if (id != 0) {
+		locationId = id;
+	    }
 	}
 	
 	jdbcTemplate.update(SQL_UPDATE_ORGANIZATION,

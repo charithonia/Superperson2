@@ -10,6 +10,7 @@ import java.util.List;
 import com.sg.superperson2.exception.*;
 import com.sg.superperson2.model.Organization;
 import com.sg.superperson2.model.OrganizationCommand;
+import com.sg.superperson2.model.OrganizationView;
 
 /**
  *
@@ -30,9 +31,18 @@ public interface OrganizationService {
 	    throws NotFoundException;
     
     public void updateOrganization(Organization org)
-	    throws InvalidObjectException;
+	    throws InvalidObjectException, DuplicateObjectException;
+    
+    public void updateOrganization(OrganizationCommand orgCom)
+	    throws InvalidObjectException, DuplicateObjectException;
     
     public List<Organization> getAllOrganizations();
     
     public Organization getOrganizationById(int id);
+    
+    public OrganizationCommand getOrganizationCommandById(int id);
+    
+    public List<OrganizationView> getAllOrganizationViews();
+    
+    public OrganizationView getOrganizationViewById(int id);
 }

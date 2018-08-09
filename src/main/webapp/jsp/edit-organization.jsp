@@ -1,6 +1,6 @@
 <%-- 
-    Document   : edit-superperson
-    Created on : Aug 6, 2018, 3:40:49 AM
+    Document   : edit-organization
+    Created on : Aug 8, 2018, 6:53:25 PM
     Author     : main
 --%>
 
@@ -13,42 +13,40 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
-        <title>Superperson Tracker - Edit Superperson</title>
+        <title>Superperson Tracker - Edit Organization</title>
 	<link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
 	<link href="${pageContext.request.contextPath}/css/superperson2.css" rel="stylesheet">
     </head>
     <body>
 	<div class="container-fluid">
-	    <h1>Edit Superperson</h1>
+	    <h1>Edit Organization</h1>
 	    <hr/>
-	    <sf:form role="form" action="edit-superperson" method="POST" modelAttribute="superperson">
+	    <sf:form role="form" action="edit-organization" method="POST" modelAttribute="organization">
 		<sf:hidden path="id"/>
 		<div class="form-group">
-		    <label class="control-label" for="name">Name</label>
+		    <label for="name">Name</label>
 		    <sf:input class="form-control" type="text" title="name" path="name"
-			      required="required" maxlength="50"/>
+			      required="required" maxlength="100"/>
 		</div>
 		<div class="form-group">
-		    <label class="control-label" for="description">Description</label>
+		    <label for="head">Head</label>
+		    <sf:input class="form-control" type="text" title="head" path="head"
+			      maxlength="50"/>
+		</div>
+		<div class="form-group">
+		    <label for="description">Description</label>
 		    <sf:textarea class="form-control" rows="10" title="description" path="description"
 			      maxlength="1000"/>
 		</div>
 		<div class="form-group">
-		    <label class="control-label" for="organizations">Organizations</label>
-		    <sf:select class="form-control" multiple="true" path="organizationIds">
-			<sf:options items="${organizations}" itemLabel="name" itemValue="id"/>
-		    </sf:select>
-		</div>
-		<div class="form-group">
-		    <label class="control-label" for="powers">Powers</label>
-		    <sf:select class="form-control" multiple="true" path="powerIds">
-			<sf:options items="${powers}" itemLabel="name" itemValue="id"/>
+		    <label for="location">Location</label>
+		    <sf:select class="form-control" title="location" path="locationId">
+			<sf:options items="${locations}" itemValue="id" itemLabel="name"/>
 		    </sf:select>
 		</div>
 		<div class="form-group">
 		    <input class="btn btn-primary" type="submit" value="Save"/>
-		    <a href="${pageContext.request.contextPath}/superpeople"
-		       class="btn btn-primary">
+		    <a class="btn btn-primary" href="${pageContext.request.contextPath}/organizations">
 			Cancel
 		    </a>
 		</div>

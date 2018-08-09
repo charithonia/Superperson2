@@ -8,6 +8,7 @@ package com.sg.superperson2.controller;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +18,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.sg.superperson2.exception.*;
 import com.sg.superperson2.model.Location;
@@ -56,6 +56,17 @@ public class SightingController {
 	model.addAttribute("sightings", sigViews);
 	
 	return "sightings";
+    }
+    
+    @GetMapping("sighting")
+    public String sightingPage(HttpServletRequest request, Model model) {
+	String idParameter = request.getParameter("id");
+	int id = Integer.parseInt(idParameter);
+	
+	SightingView sigView = sigService.getSightingViewById(id);
+	model.addAttribute("sighting", sigView);
+	
+	return "sighting";
     }
     
     @GetMapping("new-sighting")

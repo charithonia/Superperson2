@@ -8,7 +8,6 @@
 <%@taglib prefix="s" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page errorPage="error.jsp"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -29,6 +28,7 @@
 			<li role="presentation"><a href="${pageContext.request.contextPath}/sightings">Sightings</a></li>
 			<li role="presentation"><a href="${pageContext.request.contextPath}/superpeople">Superpeople</a></li>
 			<li role="presentation" class="active"><a href="${pageContext.request.contextPath}/powers">Powers</a></li>
+			<li role="presentation"><a href="${pageContext.request.contextPath}/organizations">Organizations</a></li>
 		    </ul>
 		</div>
 	    </nav>
@@ -51,7 +51,9 @@
 		    <c:forEach var="power" items="${powers}">
 			<tr>
 			    <td>
-				<c:out value="${power.name}"/>
+				<a href="powers/power?id=${power.id}">
+				    <c:out value="${power.name}"/>
+				</a>
 			    </td>
 			    <td>
 				<c:out value="${power.description}"/>

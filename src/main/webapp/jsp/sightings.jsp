@@ -28,6 +28,7 @@
 			<li role="presentation" class="active"><a href="${pageContext.request.contextPath}/sightings">Sightings</a></li>
 			<li role="presentation"><a href="${pageContext.request.contextPath}/superpeople">Superpeople</a></li>
 			<li role="presentation"><a href="${pageContext.request.contextPath}/powers">Powers</a></li>
+			<li role="presentation"><a href="${pageContext.request.contextPath}/organizations">Organizations</a></li>
 		    </ul>
 		</div>
 	    </nav>
@@ -51,7 +52,9 @@
 		    <c:forEach var="sighting" items="${sightings}">
 			<tr>
 			    <td>
-				<c:out value="${sighting.timestamp}"/>
+				<a href="sightings/sighting?id=${sighting.id}">
+				    <c:out value="${sighting.timestamp}"/>
+				</a>
 			    </td>
 			    <td class="wrap">
 				<c:forEach var="superperson" items="${sighting.superpersons}" varStatus="status">

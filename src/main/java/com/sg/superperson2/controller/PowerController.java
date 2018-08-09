@@ -42,6 +42,17 @@ public class PowerController {
 	return "powers";
     }
     
+    @GetMapping("power")
+    public String powerPage(HttpServletRequest request, Model model) {
+	String idParameter = request.getParameter("id");
+	int id = Integer.parseInt(idParameter);
+	
+	PowerView powView = powService.getPowerViewById(id);
+	model.addAttribute("power", powView);
+	
+	return "power";
+    }
+    
     @GetMapping("/new-power")
     public String newPowerPage() {
 	

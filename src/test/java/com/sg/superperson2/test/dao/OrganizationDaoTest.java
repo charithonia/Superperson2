@@ -83,14 +83,16 @@ public class OrganizationDaoTest {
 	result = organizationDao.getOrganizationById(org1.getId());
 	
 	assertNotNull(result);
-	assertEquals(result.getName(), "CONTROL");
-	assertEquals(result.getHead(), "Chief");
+	assertEquals("CONTROL", result.getName());
+	assertEquals("Chief", result.getHead());
+	assertEquals("US secret agency.", result.getDescription());
 	
 	result = organizationDao.getOrganizationById(org2.getId());
 	
 	assertNotNull(result);
-	assertEquals(result.getName(), "KAOS");
-	assertEquals(result.getHead(), "Mr. Big");
+	assertEquals("KAOS", result.getName());
+	assertEquals("Mr. Big", result.getHead());
+	assertEquals("USSR secret agency.", result.getDescription());
 	
 	organizationDao.removeOrganization(org1);
 	resultList = organizationDao.getAllOrganizations();
@@ -131,5 +133,11 @@ public class OrganizationDaoTest {
 	
 	assertTrue(inHeroLeague);
 	assertTrue(inFreemasons);
+    }
+    
+    @Test
+    @Transactional
+    public void testUpdateOrganization() {
+	
     }
 }

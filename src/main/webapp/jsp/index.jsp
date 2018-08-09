@@ -28,6 +28,7 @@
 			<li role="presentation"><a href="${pageContext.request.contextPath}/sightings">Sightings</a></li>
 			<li role="presentation"><a href="${pageContext.request.contextPath}/superpeople">Superpeople</a></li>
 			<li role="presentation"><a href="${pageContext.request.contextPath}/powers">Powers</a></li>
+			<li role="presentation"><a href="${pageContext.request.contextPath}/organizations">Organizations</a></li>
 		    </ul>
 		</div>
 	    </nav>
