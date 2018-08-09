@@ -64,7 +64,9 @@
 				</a>
 			    </td>
 			    <td>
-				Delete
+				<a href="organizations/delete-organization?id=${organization.id}">
+				    Delete
+				</a>
 			    </td>
 			</tr>
 		    </c:forEach>

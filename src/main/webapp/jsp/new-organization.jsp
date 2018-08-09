@@ -26,16 +26,6 @@
 	    </div>
 	    <form role="form" action="create-organization" method="POST" modelAttribute="organization">
 		<div class="form-group">
-		    <label class="control-label" for="location">Location</label>
-		    <select class="form-control" multiple="true" title="location" name="locationId">
-			<c:forEach var="location" items="${locations}">
-			    <option value="${location.id}">
-				<c:out value="${location.name}"/>
-			    </option>
-			</c:forEach>
-		    </select>
-		</div>
-		<div class="form-group">
 		    <label class="control-label" for="name">Name</label>
 		    <input class="form-control" type="text" title="name" name="name"
 			   required maxlength="100">
@@ -49,6 +39,16 @@
 		    <label class="control-label">Description</label>
 		    <textarea class="form-control" rows="10" title="description" name="description"
 			      maxlength="1000"></textarea>
+		</div>
+		<div class="form-group">
+		    <label class="control-label" for="location">Location</label>
+		    <select class="form-control" multiple="true" title="location" name="locationId">
+			<c:forEach var="location" items="${locations}">
+			    <option value="${location.id}">
+				<c:out value="${location.name}"/>
+			    </option>
+			</c:forEach>
+		    </select>
 		</div>
 		<div class="form-group">
 		    <input class="btn btn-primary" type="submit" value="Create"/>

@@ -24,11 +24,9 @@ public interface OrganizationService {
     public Organization addOrganization(OrganizationCommand orgCM)
 	    throws InvalidObjectException, DuplicateObjectException;
     
-    public void removeOrganization(Organization org)
-	    throws NotFoundException;
+    public void removeOrganization(Organization org);
     
-    public void removeOrganization(OrganizationCommand orgCM)
-	    throws NotFoundException;
+    public void removeOrganization(OrganizationCommand orgCM);
     
     public void updateOrganization(Organization org)
 	    throws InvalidObjectException, DuplicateObjectException;

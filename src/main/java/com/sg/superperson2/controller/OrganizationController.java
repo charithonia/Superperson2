@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.sg.superperson2.exception.*;
 import com.sg.superperson2.model.Location;
+import com.sg.superperson2.model.Organization;
 import com.sg.superperson2.model.OrganizationCommand;
 import com.sg.superperson2.model.OrganizationView;
 import com.sg.superperson2.service.LocationService;
@@ -76,6 +77,17 @@ public class OrganizationController {
 	catch (InvalidObjectException | DuplicateObjectException ex) {
 	    return "new-organization";
 	}
+	
+	return "redirect:/organizations";
+    }
+    
+    @GetMapping("delete-organization")
+    public String deleteOrganization(HttpServletRequest request) {
+	String idParameter = request.getParameter("id");
+	int id = Integer.parseInt(idParameter);
+	
+	Organization org = orgService.getOrganizationById(id);
+	orgService.removeOrganization(org);
 	
 	return "redirect:/organizations";
     }

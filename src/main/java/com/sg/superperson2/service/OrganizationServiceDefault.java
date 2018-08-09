@@ -59,17 +59,12 @@ public class OrganizationServiceDefault implements OrganizationService {
     }
     
     @Override
-    public void removeOrganization(Organization org)
-	    throws NotFoundException {
-	if (!exists(org)) {
-	    throw new NotFoundException("Organization not found.");
-	}
+    public void removeOrganization(Organization org) {
 	orgDao.removeOrganization(org);
     }
     
     @Override
-    public void removeOrganization(OrganizationCommand orgCM)
-	    throws NotFoundException {
+    public void removeOrganization(OrganizationCommand orgCM) {
 	Organization org = convertFromCommand(orgCM);
 	removeOrganization(org);
     }
